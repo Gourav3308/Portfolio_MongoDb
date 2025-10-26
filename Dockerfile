@@ -1,4 +1,4 @@
-# Use the backend directory
+# Use Maven directly instead of wrapper
 FROM openjdk:17-jdk-slim
 
 WORKDIR /app
@@ -8,7 +8,7 @@ COPY backend/ .
 
 # Install Maven and build
 RUN apt-get update && apt-get install -y maven
-RUN ./mvnw clean package -DskipTests
+RUN mvn clean package -DskipTests
 
 # Expose port
 EXPOSE 8080
