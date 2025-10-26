@@ -14,7 +14,7 @@ import { Skill } from '../models/skill.model';
 })
 export class PortfolioService {
   // Production API URL - Updated for Render deployment
-  private apiUrl = 'https://portfolio-back-v6uj.onrender.com/api';
+  private apiUrl = environment.production ? environment.apiUrl : 'https://portfolio-back-v6uj.onrender.com/api';
 
   constructor(private http: HttpClient) { }
 
