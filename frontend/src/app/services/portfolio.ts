@@ -13,6 +13,7 @@ import { Skill } from '../models/skill.model';
   providedIn: 'root'
 })
 export class PortfolioService {
+  // Production API URL - Updated for Render deployment
   private apiUrl = 'https://portfolio-back-v6uj.onrender.com/api';
 
   constructor(private http: HttpClient) { }
