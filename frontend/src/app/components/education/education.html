@@ -1,0 +1,44 @@
+<div class="education-section">
+  <!-- Professional Header Above Navbar -->
+  <div class="page-header">
+    <div class="container">
+      <h1 class="page-title">Education</h1>
+      <p class="page-subtitle">My Academic Journey</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div *ngFor="let education of educationList" class="col-12 mb-4">
+        <div class="education-card">
+          <div class="card-header">
+            <div class="education-info">
+              <h3 class="degree-title">{{ education.degree }}</h3>
+              <h4 class="university-name">{{ education.university }}</h4>
+              <div class="education-meta">
+                <span class="location">
+                  <i class="fas fa-map-marker-alt"></i>
+                  {{ education.location }}
+                </span>
+                <span *ngIf="education.gpa" class="gpa">
+                  <i class="fas fa-graduation-cap"></i>
+                  GPA: {{ education.gpa }}
+                </span>
+              </div>
+            </div>
+            <div class="date-info">
+              <span class="date-range">
+                {{ education.startDate }} - {{ education.endDate }}
+              </span>
+            </div>
+          </div>
+          <div class="card-body">
+            <p *ngIf="education.description" class="description">
+              {{ education.description }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,124 @@
+<div class="contact-section">
+  <!-- Professional Header -->
+  <div class="page-header">
+    <div class="container">
+      <h1 class="page-title">Contact Me</h1>
+      <p class="page-subtitle">Let's connect and discuss opportunities</p>
+    </div>
+  </div>
+
+  <div class="container py-5">
+    <div class="row">
+      <div class="col-lg-8 mx-auto">
+        
+        <!-- Contact Information Cards -->
+        <div class="row mb-5">
+          <div class="col-md-4 mb-4">
+            <div class="contact-info-card">
+              <div class="card-icon">
+                <i class="fas fa-envelope"></i>
+              </div>
+              <h5>Email</h5>
+              <p>gouravkrsah78@gmail.com</p>
+            </div>
+          </div>
+          
+          <div class="col-md-4 mb-4">
+            <div class="contact-info-card">
+              <div class="card-icon">
+                <i class="fas fa-phone"></i>
+              </div>
+              <h5>Phone</h5>
+              <p>+91 7903840357</p>
+            </div>
+          </div>
+          
+          <div class="col-md-4 mb-4">
+            <div class="contact-info-card">
+              <div class="card-icon">
+                <i class="fas fa-map-marker-alt"></i>
+              </div>
+              <h5>Location</h5>
+              <p>Forbesganj, Araria, Bihar</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Social Links -->
+        <div class="social-links-section text-center mb-5">
+          <h3 class="mb-4">Connect With Me</h3>
+          <div class="social-links">
+            <a href="https://github.com/Gourav3308" target="_blank" class="social-link github">
+              <i class="fab fa-github"></i>
+              <span>GitHub</span>
+            </a>
+            <a href="https://www.linkedin.com/in/gourav-java-dev/" target="_blank" class="social-link linkedin">
+              <i class="fab fa-linkedin"></i>
+              <span>LinkedIn</span>
+            </a>
+          </div>
+        </div>
+        
+        <!-- Contact Form -->
+        <div class="contact-form-section">
+          <div class="card">
+            <div class="card-body">
+              <h3 class="card-title text-center mb-4">
+                <i class="fas fa-paper-plane me-2"></i>Send Me a Message
+              </h3>
+              
+              <!-- Success/Error Messages -->
+              <div *ngIf="messageStatus" class="alert" [ngClass]="messageStatus.type === 'success' ? 'alert-success' : 'alert-danger'">
+                <i [class]="messageStatus.type === 'success' ? 'fas fa-check-circle' : 'fas fa-exclamation-circle'"></i>
+                {{ messageStatus.message }}
+              </div>
+              
+              <form (ngSubmit)="onSubmit()" #form="ngForm" [class.loading]="isSubmitting">
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="name" class="form-label">Name *</label>
+                    <input type="text" class="form-control" id="name" name="name" 
+                           [(ngModel)]="contactForm.name" required>
+                  </div>
+                  
+                  <div class="col-md-6 mb-3">
+                    <label for="email" class="form-label">Email *</label>
+                    <input type="email" class="form-control" id="email" name="email" 
+                           [(ngModel)]="contactForm.email" required>
+                  </div>
+                </div>
+                
+                <div class="mb-3">
+                  <label for="subject" class="form-label">Subject *</label>
+                  <input type="text" class="form-control" id="subject" name="subject" 
+                         [(ngModel)]="contactForm.subject" required>
+                </div>
+                
+                <div class="mb-4">
+                  <label for="message" class="form-label">Message *</label>
+                  <textarea class="form-control" id="message" name="message" rows="5" 
+                            [(ngModel)]="contactForm.message" required placeholder="Tell me about your project or opportunity..."></textarea>
+                </div>
+                
+                <div class="text-center">
+                  <button type="submit" class="btn btn-primary btn-lg" [disabled]="!form.form.valid || isSubmitting">
+                    <span *ngIf="!isSubmitting">
+                      <i class="fas fa-paper-plane me-2"></i>Send Message
+                    </span>
+                    <span *ngIf="isSubmitting">
+                      <i class="fas fa-spinner fa-spin me-2"></i>Sending...
+                    </span>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        
+        <div class="text-center mt-5">
+          <p class="text-muted">I'm always interested in new opportunities and collaborations. Let's connect!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

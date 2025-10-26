@@ -1,0 +1,86 @@
+<div class="skills-section">
+  <!-- Professional Header Above Navbar -->
+  <div class="page-header">
+    <div class="container">
+      <h1 class="page-title">Skill Categories</h1>
+      <p class="page-subtitle">Explore my expertise by category</p>
+    </div>
+  </div>
+
+  <!-- Skills Navbar -->
+  <app-skills-navbar 
+    [categories]="skillCategories"
+    [activeCategory]="selectedCategory"
+    [skillCounts]="getSkillCounts()"
+    (categorySelected)="onCategorySelected($event)">
+  </app-skills-navbar>
+
+  <!-- Category Skills View -->
+  <app-category-skills 
+    *ngIf="selectedCategory"
+    [category]="selectedCategory"
+    [skills]="getSkillsByCategory(selectedCategory)"
+    (backToSkills)="onBackToSkills()">
+  </app-category-skills>
+
+  <!-- All Skills Overview -->
+  <div *ngIf="!selectedCategory" class="all-skills-view">
+    <div class="container">
+      <!-- Skills Overview Cards -->
+      <div class="skills-overview-grid">
+        <div *ngFor="let category of skillCategories" class="overview-card" [attr.data-category]="category" (click)="onCategorySelected(category)">
+          <div class="card-header">
+            <div class="category-icon">
+              <i [class]="getCategoryIcon(category)"></i>
+            </div>
+            <div class="category-info">
+              <h3 class="category-title">{{ category }}</h3>
+              <p class="category-count">{{ getSkillsByCategory(category).length }} Skills</p>
+            </div>
+          </div>
+          
+          <div class="card-preview">
+            <div *ngFor="let skill of getSkillsByCategory(category).slice(0, 3)" class="preview-skill">
+              <div class="skill-icon" [style.background]="getSkillIconColor(skill.name)">
+                <i [class]="getSkillIcon(skill.name)"></i>
+              </div>
+              <span class="skill-name">{{ skill.name }}</span>
+            </div>
+            <div *ngIf="getSkillsByCategory(category).length > 3" class="more-skills">
+              +{{ getSkillsByCategory(category).length - 3 }} more
+            </div>
+          </div>
+          
+          <div class="card-footer">
+            <span class="view-skills">View All Skills →</span>
+          </div>
+        </div>
+      </div>
+
+  </div>
+
+  <!-- Skills Overview Section -->
+  <div class="skills-overview-section">
+    <div class="container">
+      <h2 class="overview-title">Skills Overview</h2>
+      <div class="overview-stats">
+        <div class="stat-card">
+          <div class="stat-number">{{ getTotalSkills() }}</div>
+          <div class="stat-label">Total Skills</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">{{ skillCategories.length }}</div>
+          <div class="stat-label">Categories</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">{{ getAverageProficiency() }}%</div>
+          <div class="stat-label">Avg. Proficiency</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">{{ getExpertSkillsCount() }}</div>
+          <div class="stat-label">Expert Level</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

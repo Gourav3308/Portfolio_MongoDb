@@ -1,0 +1,62 @@
+<div class="certifications-section">
+  <!-- Professional Header Above Navbar -->
+  <div class="page-header">
+    <div class="container">
+      <h1 class="page-title">Certifications</h1>
+      <p class="page-subtitle">My Professional Certifications</p>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <div class="row">
+      <div *ngFor="let certification of certificationList" class="col-lg-4 col-md-6 mb-4">
+        <div class="certification-card" [attr.data-org]="certification.issuingOrganization">
+          <div class="card-header">
+            <div class="certification-icon">
+              <i class="fas fa-certificate"></i>
+            </div>
+            <div class="certification-info">
+              <h3 class="certification-name">{{ certification.name }}</h3>
+              <h4 class="issuing-organization">{{ certification.issuingOrganization }}</h4>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="certification-details">
+              <div *ngIf="certification.issueDate" class="detail-item">
+                <i class="fas fa-calendar-alt"></i>
+                <span>Issued: {{ certification.issueDate }}</span>
+              </div>
+              <div *ngIf="certification.expiryDate" class="detail-item">
+                <i class="fas fa-calendar-times"></i>
+                <span>Expires: {{ certification.expiryDate }}</span>
+              </div>
+              <div *ngIf="certification.credentialId" class="detail-item">
+                <i class="fas fa-id-card"></i>
+                <span>ID: {{ certification.credentialId }}</span>
+              </div>
+            </div>
+            
+            <p *ngIf="certification.description" class="description">
+              {{ certification.description }}
+            </p>
+
+            <div class="certification-footer">
+              <span class="status-badge" [ngClass]="getStatusClass(certification.status)">
+                <i class="fas fa-circle"></i>
+                {{ certification.status || 'Unknown' }}
+              </span>
+              <button *ngIf="certification.credentialUrl && certification.status !== 'Ongoing'" 
+                      (click)="openCertificateInNewTab(certification)" 
+                      class="view-certificate-btn">
+                <i class="fas fa-eye"></i>
+                View Certificate
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

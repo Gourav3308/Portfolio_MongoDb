@@ -1,0 +1,330 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Global Theme Variables */
+:root {
+  --primary-color: #3b82f6;
+  --secondary-color: #1d4ed8;
+  --accent-color: #60a5fa;
+  --text-primary: #ffffff;
+  --text-secondary: #9ca3af;
+  --background-primary: #0f1419;
+  --background-secondary: #1a2332;
+  --background-tertiary: #0d1117;
+  --border-color: rgba(59, 130, 246, 0.2);
+  --shadow-color: rgba(0, 0, 0, 0.3);
+}
+
+/* Light Theme Variables */
+[data-theme="light"] {
+  --primary-color: #2563eb;
+  --secondary-color: #1e40af;
+  --accent-color: #3b82f6;
+  --text-primary: #1f2937;
+  --text-secondary: #6b7280;
+  --background-primary: #ffffff;
+  --background-secondary: #f8fafc;
+  --background-tertiary: #f1f5f9;
+  --border-color: rgba(37, 99, 235, 0.2);
+  --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Global Theme Styles */
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* Responsive Container */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+@media (max-width: 1200px) {
+  .container {
+    max-width: 100%;
+    padding: 0 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 15px;
+  }
+}
+
+@media (max-width: 576px) {
+  .container {
+    padding: 0 10px;
+  }
+}
+
+/* Responsive Typography */
+h1, .display-4 {
+  font-size: 3.5rem;
+  line-height: 1.2;
+}
+
+h2, .h3 {
+  font-size: 2rem;
+  line-height: 1.3;
+}
+
+h3, .h4 {
+  font-size: 1.5rem;
+  line-height: 1.4;
+}
+
+@media (max-width: 1200px) {
+  h1, .display-4 {
+    font-size: 3rem;
+  }
+  
+  h2, .h3 {
+    font-size: 1.8rem;
+  }
+  
+  h3, .h4 {
+    font-size: 1.4rem;
+  }
+}
+
+@media (max-width: 768px) {
+  h1, .display-4 {
+    font-size: 2.5rem;
+  }
+  
+  h2, .h3 {
+    font-size: 1.6rem;
+  }
+  
+  h3, .h4 {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 576px) {
+  h1, .display-4 {
+    font-size: 2rem;
+  }
+  
+  h2, .h3 {
+    font-size: 1.4rem;
+  }
+  
+  h3, .h4 {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 400px) {
+  h1, .display-4 {
+    font-size: 1.8rem;
+  }
+  
+  h2, .h3 {
+    font-size: 1.3rem;
+  }
+  
+  h3, .h4 {
+    font-size: 1.1rem;
+  }
+}
+
+/* Responsive Buttons */
+.btn {
+  font-size: 1rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.btn-lg {
+  font-size: 1.1rem;
+  padding: 1rem 2rem;
+}
+
+@media (max-width: 768px) {
+  .btn {
+    font-size: 0.9rem;
+    padding: 0.6rem 1.2rem;
+  }
+  
+  .btn-lg {
+    font-size: 1rem;
+    padding: 0.8rem 1.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .btn {
+    font-size: 0.85rem;
+    padding: 0.5rem 1rem;
+  }
+  
+  .btn-lg {
+    font-size: 0.9rem;
+    padding: 0.7rem 1.2rem;
+  }
+}
+
+/* Responsive Cards */
+.card {
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .card {
+    border-radius: 10px;
+    margin-bottom: 1rem;
+  }
+}
+
+/* Responsive Spacing */
+.py-5 {
+  padding-top: 3rem !important;
+  padding-bottom: 3rem !important;
+}
+
+.mb-5 {
+  margin-bottom: 3rem !important;
+}
+
+@media (max-width: 768px) {
+  .py-5 {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+  }
+  
+  .mb-5 {
+    margin-bottom: 2rem !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .py-5 {
+    padding-top: 1.5rem !important;
+    padding-bottom: 1.5rem !important;
+  }
+  
+  .mb-5 {
+    margin-bottom: 1.5rem !important;
+  }
+}
+
+.dark-theme {
+  background-color: var(--background-primary) !important;
+  color: var(--text-primary) !important;
+}
+
+.light-theme {
+  background-color: var(--background-primary) !important;
+  color: var(--text-primary) !important;
+}
+
+/* Ensure all pages inherit theme */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Home page specific theming */
+.hero-section {
+  background-color: var(--background-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Bootstrap overrides for theming */
+[data-theme="dark"] {
+  .text-primary {
+    color: var(--primary-color) !important;
+  }
+  
+  .text-secondary {
+    color: var(--text-secondary) !important;
+  }
+  
+  .text-muted {
+    color: var(--text-secondary) !important;
+  }
+  
+  .btn-primary {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+  }
+  
+  .btn-outline-primary {
+    color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+  }
+}
+
+/* Light mode navbar visibility fixes */
+[data-theme="light"] {
+  .navbar {
+    .navbar-nav .nav-item .nav-link {
+      color: #ffffff !important;
+      font-weight: 600 !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+      display: block !important;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.5) !important;
+    }
+    
+    .navbar-brand {
+      color: var(--text-primary) !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+    }
+    
+    /* Override Bootstrap navbar-dark styles */
+    &.navbar-dark .navbar-nav .nav-link {
+      color: #ffffff !important;
+    }
+    
+    &.navbar-dark .navbar-brand {
+      color: var(--text-primary) !important;
+    }
+  }
+}
+
+/* Brand-specific colors for category icons - Global overrides */
+.category-skills-section .category-header[data-category="Languages"] .category-icon {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%) !important;
+  box-shadow: 0 15px 30px rgba(255, 107, 107, 0.4) !important;
+}
+
+.category-skills-section .category-header[data-category="Backend"] .category-icon {
+  background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%) !important;
+  box-shadow: 0 15px 30px rgba(78, 205, 196, 0.4) !important;
+}
+
+.category-skills-section .category-header[data-category="Frontend"] .category-icon {
+  background: linear-gradient(135deg, #45b7d1 0%, #2196f3 100%) !important;
+  box-shadow: 0 15px 30px rgba(69, 183, 209, 0.4) !important;
+}
+
+.category-skills-section .category-header[data-category="Databases"] .category-icon {
+  background: linear-gradient(135deg, #96ceb4 0%, #4caf50 100%) !important;
+  box-shadow: 0 15px 30px rgba(150, 206, 180, 0.4) !important;
+}
+
+.category-skills-section .category-header[data-category="Tools"] .category-icon {
+  background: linear-gradient(135deg, #feca57 0%, #ff9800 100%) !important;
+  box-shadow: 0 15px 30px rgba(254, 202, 87, 0.4) !important;
+}
+
+.category-skills-section .category-header[data-category="Build & Testing"] .category-icon {
+  background: linear-gradient(135deg, #ff9ff3 0%, #e91e63 100%) !important;
+  box-shadow: 0 15px 30px rgba(255, 159, 243, 0.4) !important;
+}
+
+.category-skills-section .category-header[data-category="Concepts"] .category-icon {
+  background: linear-gradient(135deg, #54a0ff 0%, #3f51b5 100%) !important;
+  box-shadow: 0 15px 30px rgba(84, 160, 255, 0.4) !important;
+}

@@ -1,0 +1,68 @@
+<div class="experience-section">
+  <!-- Professional Header Above Navbar -->
+  <div class="page-header">
+    <div class="container">
+      <h1 class="page-title">Professional Experience</h1>
+      <p class="page-subtitle">My Career Journey</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div *ngFor="let experience of experienceList" class="col-12 mb-4">
+        <div class="experience-card">
+          <div class="card-header">
+            <div class="job-info">
+              <h3 class="job-title">{{ experience.jobTitle }}</h3>
+              <h4 class="company-name">{{ experience.company }}</h4>
+              <div class="job-meta">
+                <span class="location">
+                  <i class="fas fa-map-marker-alt"></i>
+                  {{ experience.location }}
+                </span>
+                <span *ngIf="experience.type" class="job-type">
+                  <i class="fas fa-briefcase"></i>
+                  {{ experience.type }}
+                </span>
+              </div>
+            </div>
+            <div class="date-info">
+              <span class="date-range">
+                {{ experience.startDate }} - {{ experience.endDate }}
+              </span>
+              <span *ngIf="experience.isCurrent" class="current-badge">
+                <i class="fas fa-circle"></i>
+                Current
+              </span>
+            </div>
+          </div>
+          <div class="card-body">
+            <p *ngIf="experience.description" class="description">
+              {{ experience.description }}
+            </p>
+            
+            <div class="experience-details">
+              <div *ngIf="experience.responsibilities && experience.responsibilities.length > 0" class="responsibilities">
+                <h5>Key Responsibilities:</h5>
+                <ul>
+                  <li *ngFor="let responsibility of experience.responsibilities">
+                    {{ responsibility }}
+                  </li>
+                </ul>
+              </div>
+
+              <div *ngIf="experience.technologies && experience.technologies.length > 0" class="technologies">
+                <h5>Technologies Used:</h5>
+                <div class="tech-tags">
+                  <span *ngFor="let tech of experience.technologies" class="tech-tag">
+                    {{ tech }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

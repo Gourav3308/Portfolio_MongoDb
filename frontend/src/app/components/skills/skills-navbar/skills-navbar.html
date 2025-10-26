@@ -1,0 +1,23 @@
+<nav class="skills-navbar">
+  <div class="container">
+    <div class="navbar-content">
+      <div class="category-tabs">
+        <button 
+          *ngFor="let category of categories" 
+          class="category-tab"
+          [class.active]="activeCategory === category"
+          (click)="selectCategory(category)"
+          [attr.data-category]="category">
+          <div class="tab-icon">
+            <i [class]="getCategoryIcon(category)"></i>
+          </div>
+          <div class="tab-content">
+            <span class="tab-title">{{ category }}</span>
+            <span class="tab-count">{{ getSkillCount(category) }} Skills</span>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+

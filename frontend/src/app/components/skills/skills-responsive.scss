@@ -1,0 +1,331 @@
+// Responsive Design for Professional Headers
+@media (max-width: 1200px) {
+  .skills-section {
+    .page-header {
+      padding: 80px 0 60px 0;
+
+      .page-title {
+        font-size: 3.5rem;
+      }
+
+      .page-subtitle {
+        font-size: 1.4rem;
+      }
+    }
+
+    .skills-overview-section {
+      padding: 80px 0;
+
+      .overview-title {
+        font-size: 2.5rem;
+      }
+
+      .overview-stats {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 25px;
+
+        .stat-card {
+          padding: 25px 20px;
+
+          .stat-number {
+            font-size: 2.5rem;
+          }
+
+          .stat-label {
+            font-size: 1rem;
+          }
+        }
+      }
+    }
+
+    .all-skills-view {
+      .skills-overview-grid {
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 25px;
+
+        .overview-card {
+          padding: 30px;
+
+          .card-header {
+            .category-icon {
+              width: 55px;
+              height: 55px;
+              font-size: 1.6rem;
+            }
+
+            .category-info {
+              .category-title {
+                font-size: 1.4rem;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 992px) {
+  .skills-section {
+    .page-header {
+      padding: 70px 0 50px 0;
+
+      .page-title {
+        font-size: 3rem;
+      }
+
+      .page-subtitle {
+        font-size: 1.3rem;
+      }
+    }
+
+    .skills-overview-section {
+      padding: 70px 0;
+
+      .overview-title {
+        font-size: 2.2rem;
+      }
+
+      .overview-stats {
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 20px;
+
+        .stat-card {
+          padding: 22px 18px;
+
+          .stat-number {
+            font-size: 2.2rem;
+          }
+
+          .stat-label {
+            font-size: 0.95rem;
+          }
+        }
+      }
+    }
+
+    .all-skills-view {
+      .skills-overview-grid {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+
+        .overview-card {
+          padding: 25px;
+
+          .card-header {
+            .category-icon {
+              width: 50px;
+              height: 50px;
+              font-size: 1.5rem;
+            }
+
+            .category-info {
+              .category-title {
+                font-size: 1.3rem;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .skills-section {
+    .page-header {
+      padding: 60px 0 40px 0;
+
+      .page-title {
+        font-size: 2.5rem;
+      }
+
+      .page-subtitle {
+        font-size: 1.2rem;
+      }
+    }
+
+    .skills-overview-section {
+      padding: 60px 0;
+
+      .overview-title {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .overview-stats {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 20px;
+
+        .stat-card {
+          padding: 20px 15px;
+
+          .stat-number {
+            font-size: 2rem;
+          }
+
+          .stat-label {
+            font-size: 0.9rem;
+          }
+        }
+      }
+    }
+
+    .all-skills-view {
+      .skills-overview-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+
+        .overview-card {
+          padding: 20px;
+
+          .card-header {
+            .category-icon {
+              width: 45px;
+              height: 45px;
+              font-size: 1.3rem;
+            }
+
+            .category-info {
+              .category-title {
+                font-size: 1.2rem;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .skills-section {
+    .page-header {
+      padding: 50px 0 30px 0;
+
+      .page-title {
+        font-size: 2rem;
+      }
+
+      .page-subtitle {
+        font-size: 1rem;
+      }
+    }
+
+    .skills-overview-section {
+      padding: 50px 0;
+
+      .overview-title {
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .overview-stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+
+        .stat-card {
+          padding: 18px 12px;
+
+          .stat-number {
+            font-size: 1.8rem;
+          }
+
+          .stat-label {
+            font-size: 0.85rem;
+          }
+        }
+      }
+    }
+
+    .all-skills-view {
+      .skills-overview-grid {
+        gap: 12px;
+
+        .overview-card {
+          padding: 18px;
+
+          .card-header {
+            .category-icon {
+              width: 40px;
+              height: 40px;
+              font-size: 1.2rem;
+            }
+
+            .category-info {
+              .category-title {
+                font-size: 1.1rem;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 400px) {
+  .skills-section {
+    .page-header {
+      padding: 40px 0 20px 0;
+
+      .page-title {
+        font-size: 1.8rem;
+      }
+
+      .page-subtitle {
+        font-size: 0.9rem;
+      }
+    }
+
+    .skills-overview-section {
+      padding: 40px 0;
+
+      .overview-title {
+        font-size: 1.6rem;
+        margin-bottom: 1rem;
+      }
+
+      .overview-stats {
+        grid-template-columns: 1fr;
+        gap: 12px;
+
+        .stat-card {
+          padding: 15px 10px;
+
+          .stat-number {
+            font-size: 1.6rem;
+          }
+
+          .stat-label {
+            font-size: 0.8rem;
+          }
+        }
+      }
+    }
+
+    .all-skills-view {
+      .skills-overview-grid {
+        gap: 10px;
+
+        .overview-card {
+          padding: 15px;
+
+          .card-header {
+            .category-icon {
+              width: 35px;
+              height: 35px;
+              font-size: 1.1rem;
+            }
+
+            .category-info {
+              .category-title {
+                font-size: 1rem;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

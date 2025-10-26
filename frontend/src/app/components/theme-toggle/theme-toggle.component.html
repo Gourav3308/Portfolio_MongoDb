@@ -1,0 +1,15 @@
+<button 
+  class="theme-toggle-btn" 
+  (click)="toggleTheme()"
+  [attr.aria-label]="themeService.getCurrentTheme() ? 'Switch to light mode' : 'Switch to dark mode'"
+  title="{{ themeService.getCurrentTheme() ? 'Switch to Light Mode' : 'Switch to Dark Mode' }}">
+  
+  <div class="theme-icon">
+    <i *ngIf="themeService.getCurrentTheme()" class="fas fa-sun"></i>
+    <i *ngIf="!themeService.getCurrentTheme()" class="fas fa-moon"></i>
+  </div>
+  
+  <span class="theme-text">
+    {{ themeService.getCurrentTheme() ? 'Light' : 'Dark' }}
+  </span>
+</button>

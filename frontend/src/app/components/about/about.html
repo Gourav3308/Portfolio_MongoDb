@@ -1,0 +1,55 @@
+<div class="container py-5">
+  <div class="row">
+    <div class="col-lg-8 mx-auto">
+      <h1 class="display-4 text-center mb-5">About Me</h1>
+      
+      <div class="row mb-5" *ngIf="personalInfo">
+        <div class="col-md-4 text-center mb-4">
+          <img [src]="'https://via.placeholder.com/300x300/007bff/ffffff?text=' + personalInfo.name" 
+               alt="Profile" class="img-fluid rounded-circle shadow-lg">
+        </div>
+        <div class="col-md-8">
+          <h2 class="h3">{{ personalInfo.name }}</h2>
+          <h3 class="h5 text-muted mb-3">{{ personalInfo.title }}</h3>
+          <p class="lead">{{ personalInfo.summary }}</p>
+          
+          <div class="row">
+            <div class="col-md-6">
+              <p><i class="fas fa-envelope me-2"></i>{{ personalInfo.email }}</p>
+              <p><i class="fas fa-phone me-2"></i>{{ personalInfo.phone }}</p>
+              <p><i class="fas fa-map-marker-alt me-2"></i>{{ personalInfo.location }}</p>
+            </div>
+            <div class="col-md-6">
+              <p><i class="fab fa-linkedin me-2"></i><a [href]="personalInfo.linkedin" target="_blank">LinkedIn Profile</a></p>
+              <p><i class="fab fa-github me-2"></i><a [href]="personalInfo.github" target="_blank">GitHub Profile</a></p>
+              <p><i class="fas fa-globe me-2"></i><a [href]="personalInfo.portfolio" target="_blank">Portfolio Website</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-lg-6 mb-4">
+          <div class="card h-100">
+            <div class="card-body">
+              <h4 class="card-title"><i class="fas fa-graduation-cap me-2"></i>Education</h4>
+              <p class="card-text">Bachelor's degree in Computer Science with focus on software development and web technologies.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 mb-4">
+          <div class="card h-100">
+            <div class="card-body">
+              <h4 class="card-title"><i class="fas fa-briefcase me-2"></i>Experience</h4>
+              <p class="card-text">Full-stack developer with experience in Java, Spring Boot, Angular, and MongoDB. Passionate about creating innovative solutions.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="text-center mt-5">
+        <a routerLink="/contact" class="btn btn-primary btn-lg">Get In Touch</a>
+      </div>
+    </div>
+  </div>
+</div>

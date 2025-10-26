@@ -1,0 +1,434 @@
+.certifications-section {
+  padding: 40px 0;
+  background: linear-gradient(135deg, var(--background-primary) 0%, var(--background-secondary) 50%, var(--background-tertiary) 100%);
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.3s ease;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(59,130,246,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+    opacity: 0.4;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 80px;
+    position: relative;
+    z-index: 2;
+    padding: 60px 0;
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(30, 41, 59, 0.8));
+    border-radius: 30px;
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+
+    .section-title {
+      font-size: 4.5rem;
+      font-weight: 900;
+      margin-bottom: 2rem;
+      color: #ffffff;
+      text-shadow: 0 8px 16px rgba(0,0,0,0.8);
+      background: linear-gradient(45deg, #3b82f6, #60a5fa, #93c5fd, #3b82f6);
+      background-size: 400% 400%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradientShift 5s ease infinite;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+
+    .section-subtitle {
+      font-size: 1.5rem;
+      color: rgba(156, 163, 175, 0.95);
+      margin: 0;
+      font-weight: 500;
+      letter-spacing: 0.8px;
+      line-height: 1.4;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+  }
+
+  // Professional Page Header (Above Navbar)
+  .page-header {
+    background: linear-gradient(135deg, var(--background-tertiary) 0%, var(--background-secondary) 100%);
+    padding: 100px 0 80px 0;
+    text-align: center;
+    position: relative;
+    z-index: 10;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 20px;
+    transition: background 0.3s ease, border-color 0.3s ease;
+
+    .page-title {
+      font-size: 4rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+      text-shadow: 0 4px 8px var(--shadow-color);
+      letter-spacing: -0.02em;
+      transition: color 0.3s ease;
+    }
+
+    .page-subtitle {
+      font-size: 1.5rem;
+      color: var(--text-secondary);
+      margin: 0;
+      font-weight: 400;
+      letter-spacing: 0.5px;
+      transition: color 0.3s ease;
+    }
+  }
+
+  .certification-card {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    padding: 0;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    transition: all 0.4s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    z-index: 2;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(29, 78, 216, 0.05));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    &:hover {
+      transform: translateY(-15px) scale(1.03);
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+      border-color: rgba(59, 130, 246, 0.4);
+
+      &::after {
+        opacity: 1;
+      }
+    }
+
+    .card-header {
+      padding: 40px 40px 25px;
+      border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+      display: flex;
+      align-items: flex-start;
+      gap: 25px;
+      position: relative;
+      z-index: 2;
+
+      .certification-icon {
+        flex-shrink: 0;
+        width: 70px;
+        height: 70px;
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+        transition: all 0.3s ease;
+
+        i {
+          font-size: 1.8rem;
+          color: white;
+        }
+      }
+
+      // Organization-specific logo colors with unique icons
+      &[data-org="GeeksforGeeks"] .certification-icon {
+        background: linear-gradient(135deg, #00c851 0%, #007e33 100%) !important;
+        box-shadow: 0 8px 25px rgba(0, 200, 81, 0.4) !important;
+        
+        i::before {
+          content: "\f1b2" !important; // Code icon
+        }
+      }
+
+      &[data-org="Smart Programming"] .certification-icon {
+        background: linear-gradient(135deg, #e91e63 0%, #c2185b 100%) !important;
+        box-shadow: 0 8px 25px rgba(233, 30, 99, 0.4) !important;
+        
+        i::before {
+          content: "\f0f4" !important; // Coffee icon
+        }
+      }
+
+      &[data-org="TechnoHacks EduTech"] .certification-icon,
+      &[data-org="TechnoHacks Solutions Pvt. Ltd."] .certification-icon {
+        background: linear-gradient(135deg, #9c27b0 0%, #7b1fa2 100%) !important;
+        box-shadow: 0 8px 25px rgba(156, 39, 176, 0.4) !important;
+        
+        i::before {
+          content: "\f0a3" !important; // Trophy icon
+        }
+      }
+
+      &[data-org="Centurion University of Technology & Management"] .certification-icon {
+        background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%) !important;
+        box-shadow: 0 8px 25px rgba(33, 150, 243, 0.4) !important;
+        
+        i::before {
+          content: "\f19c" !important; // University icon
+        }
+      }
+
+      &[data-org="CodeTantra"] .certification-icon {
+        background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%) !important;
+        box-shadow: 0 8px 25px rgba(255, 152, 0, 0.4) !important;
+        
+        i::before {
+          content: "\f135" !important; // Sun icon
+        }
+      }
+
+      &[data-org="Aspire For Her in collaboration with AWS"] .certification-icon {
+        background: linear-gradient(135deg, #ff5722 0%, #d84315 100%) !important;
+        box-shadow: 0 8px 25px rgba(255, 87, 34, 0.4) !important;
+        
+        i::before {
+          content: "\f0c2" !important; // Cloud icon
+        }
+      }
+    }
+
+      .certification-info {
+        flex: 1;
+
+        .certification-name {
+          font-size: 1.5rem;
+          font-weight: 700;
+          margin-bottom: 0.8rem;
+          color: var(--text-primary);
+          background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          line-height: 1.3;
+        }
+
+        .issuing-organization {
+          font-size: 1.1rem;
+          font-weight: 600;
+          color: var(--text-primary);
+          opacity: 0.9;
+          margin: 0;
+        }
+      }
+    }
+
+    .card-body {
+      padding: 25px 40px 40px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      z-index: 2;
+
+      .certification-details {
+        margin-bottom: 25px;
+
+        .detail-item {
+          display: flex;
+          align-items: center;
+          margin-bottom: 12px;
+          font-size: 1rem;
+          color: var(--text-secondary);
+          font-weight: 500;
+
+          i {
+            width: 20px;
+            margin-right: 12px;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+          }
+        }
+      }
+
+      .description {
+        font-size: 1.1rem;
+        line-height: 1.7;
+        color: var(--text-primary);
+        margin-bottom: 25px;
+        flex: 1;
+        opacity: 0.9;
+      }
+
+      .certification-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: auto;
+        gap: 15px;
+
+        .status-badge {
+          display: inline-flex;
+          align-items: center;
+          padding: 8px 16px;
+          border-radius: 25px;
+          font-size: 0.9rem;
+          font-weight: 700;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+
+          i {
+            margin-right: 6px;
+            font-size: 0.8rem;
+          }
+
+          &.status-active {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+          }
+
+          &.status-ongoing {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            animation: pulse 2s infinite;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+          }
+
+          &.status-expired {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+          }
+
+          &.status-default {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(29, 78, 216, 0.2));
+            color: var(--primary-color);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            backdrop-filter: blur(10px);
+          }
+        }
+
+        .view-certificate-btn {
+          display: inline-flex;
+          align-items: center;
+          padding: 10px 20px;
+          background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+          color: white;
+          text-decoration: none;
+          border-radius: 25px;
+          font-size: 0.9rem;
+          font-weight: 600;
+          transition: all 0.3s ease;
+          box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+          border: none;
+          cursor: pointer;
+
+          &:hover {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            transform: translateY(-3px);
+            text-decoration: none;
+            color: white;
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+          }
+
+          i {
+            margin-right: 6px;
+            font-size: 0.9rem;
+          }
+        }
+      }
+    }
+  }
+
+  // Responsive Design
+@media (max-width: 768px) {
+  .certifications-section {
+    padding: 20px 0;
+
+    .section-header {
+      padding: 40px 20px;
+      margin-bottom: 50px;
+
+      .section-title {
+        font-size: 3rem;
+      }
+
+      .section-subtitle {
+        font-size: 1.2rem;
+      }
+    }
+
+    .certification-card {
+      .card-header {
+        padding: 30px 25px 20px;
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+
+        .certification-icon {
+          align-self: center;
+          width: 60px;
+          height: 60px;
+
+          i {
+            font-size: 1.5rem;
+          }
+        }
+
+        .certification-info {
+          .certification-name {
+            font-size: 1.3rem;
+          }
+
+          .issuing-organization {
+            font-size: 1rem;
+          }
+        }
+      }
+
+      .card-body {
+        padding: 20px 25px 30px;
+
+        .certification-details {
+          .detail-item {
+            font-size: 0.95rem;
+          }
+        }
+
+        .description {
+          font-size: 1rem;
+        }
+
+        .certification-footer {
+          flex-direction: column;
+          gap: 12px;
+          align-items: stretch;
+
+          .status-badge {
+            text-align: center;
+            justify-content: center;
+          }
+
+          .view-certificate-btn {
+            text-align: center;
+            justify-content: center;
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}
+
+

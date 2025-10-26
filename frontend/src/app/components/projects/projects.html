@@ -1,0 +1,63 @@
+<div class="projects-section">
+  <!-- Professional Header Above Navbar -->
+  <div class="page-header">
+    <div class="container">
+      <h1 class="page-title">Projects</h1>
+      <p class="page-subtitle">My Development Portfolio</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div *ngFor="let project of projects" class="col-12 mb-4">
+        <div class="project-card">
+          <div class="card-header">
+            <div class="project-info">
+              <h3 class="project-title">{{ project.name }}</h3>
+              <h4 class="project-category">{{ project.category }}</h4>
+              <div class="project-meta">
+                <span class="duration">
+                  <i class="fas fa-calendar-alt"></i>
+                  {{ project.startDate }} - {{ project.endDate }}
+                </span>
+                <span *ngIf="project.isCurrent" class="current-badge">
+                  <i class="fas fa-circle"></i>
+                  Ongoing
+                </span>
+              </div>
+            </div>
+            <div class="project-actions">
+              <a *ngIf="project.githubUrl" [href]="project.githubUrl" target="_blank" class="github-btn">
+                <i class="fab fa-github"></i>
+                View Code
+              </a>
+            </div>
+          </div>
+          <div class="card-body">
+            <p class="description">{{ project.description }}</p>
+            
+            <div class="project-details">
+              <div *ngIf="project.features && project.features.length > 0" class="features">
+                <h5>Key Features:</h5>
+                <ul>
+                  <li *ngFor="let feature of project.features">
+                    {{ feature }}
+                  </li>
+                </ul>
+              </div>
+
+              <div *ngIf="project.technologies" class="technologies">
+                <h5>Technologies Used:</h5>
+                <div class="tech-tags">
+                  <span *ngFor="let tech of project.technologies.split(',')" class="tech-tag">
+                    {{ tech.trim() }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
