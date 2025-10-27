@@ -6,9 +6,10 @@ import { PortfolioService } from '../../services/portfolio';
 
 @Component({
   selector: 'app-projects',
+  standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './projects.html',
-  styleUrl: './projects.scss',
+  styleUrls: ['./projects.scss']
 })
 export class ProjectsComponent implements OnInit {
   projects: Project[] = [];

@@ -19,9 +19,10 @@ interface MessageStatus {
 
 @Component({
   selector: 'app-contact',
+  standalone: true,
   imports: [CommonModule, FormsModule, HttpClientModule],
   templateUrl: './contact.html',
-  styleUrl: './contact.scss',
+  styleUrls: ['./contact.scss']
 })
 export class ContactComponent implements OnInit {
   personalInfo: PersonalInfo | null = null;

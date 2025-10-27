@@ -3,9 +3,10 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-skills-navbar',
+  standalone: true,
   imports: [CommonModule],
   templateUrl: './skills-navbar.html',
-  styleUrl: './skills-navbar.scss',
+  styleUrls: ['./skills-navbar.scss']
 })
 export class SkillsNavbarComponent {
   @Input() categories: string[] = [];

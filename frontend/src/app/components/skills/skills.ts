@@ -7,9 +7,10 @@ import { SkillsNavbarComponent } from './skills-navbar/skills-navbar';
 
 @Component({
   selector: 'app-skills',
+  standalone: true,
   imports: [CommonModule, SkillsNavbarComponent, CategorySkillsComponent],
   templateUrl: './skills.html',
-  styleUrl: './skills.scss',
+  styleUrls: ['./skills.scss']
 })
 export class SkillsComponent implements OnInit {
   skills: Skill[] = [];

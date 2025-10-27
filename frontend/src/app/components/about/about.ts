@@ -6,9 +6,10 @@ import { PortfolioService } from '../../services/portfolio';
 
 @Component({
   selector: 'app-about',
+  standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './about.html',
-  styleUrl: './about.scss',
+  styleUrls: ['./about.scss']
 })
 export class AboutComponent implements OnInit {
   personalInfo: PersonalInfo | null = null;

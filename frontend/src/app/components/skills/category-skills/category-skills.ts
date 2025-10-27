@@ -4,9 +4,10 @@ import { Skill } from '../../../models/skill.model';
 
 @Component({
   selector: 'app-category-skills',
+  standalone: true,
   imports: [CommonModule],
   templateUrl: './category-skills.html',
-  styleUrl: './category-skills.scss',
+  styleUrls: ['./category-skills.scss']
 })
 export class CategorySkillsComponent implements OnInit {
   @Input() category: string = '';
@@ -185,6 +186,7 @@ export class CategorySkillsComponent implements OnInit {
     this.backToSkills.emit();
   }
 }
+
 
 
 
