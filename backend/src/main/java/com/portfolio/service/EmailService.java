@@ -73,18 +73,36 @@ public class EmailService {
             if (!resendApiKey.isEmpty()) {
                 logger.info("Attempting to send emails via Resend API");
                 emailsSent = sendEmailsViaResend(savedMessage);
-            } else if (!sendGridApiKey.isEmpty()) {
+                if (emailsSent) {
+                    logger.info("Emails sent successfully via Resend API");
+                } else {
+                    logger.warn("Resend API failed, trying SendGrid");
+                }
+            }
+            
+            // Try SendGrid if Resend failed or not configured
+            if (!emailsSent && !sendGridApiKey.isEmpty()) {
                 logger.info("Attempting to send emails via SendGrid API");
                 emailsSent = sendEmailsViaSendGrid(savedMessage);
-            } else {
-                logger.warn("No email API keys configured - check RESEND_API_KEY or SENDGRID_API_KEY environment variables");
+                if (emailsSent) {
+                    logger.info("Emails sent successfully via SendGrid API");
+                } else {
+                    logger.warn("SendGrid API failed, trying SMTP");
+                }
             }
             
             if (!emailsSent) {
-                logger.info("SendGrid failed or not configured, trying SMTP");
+                logger.warn("No email API keys configured or API services failed - check RESEND_API_KEY or SENDGRID_API_KEY environment variables");
+            }
+            
+            // Only try SMTP if no API keys are configured (for local development)
+            if (!emailsSent && resendApiKey.isEmpty() && sendGridApiKey.isEmpty()) {
+                logger.info("No API keys configured, trying SMTP (local development only)");
                 boolean adminEmailSent = sendEmailToAdmin(savedMessage);
                 boolean confirmationEmailSent = sendConfirmationEmail(savedMessage);
                 emailsSent = adminEmailSent && confirmationEmailSent;
+            } else if (!emailsSent) {
+                logger.warn("Email API services failed and SMTP is not recommended for production - emails not sent");
             }
             
             if (emailsSent) {
