@@ -152,6 +152,35 @@ public class ContactController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/test-email")
+    public ResponseEntity<Map<String, String>> testEmailConnection() {
+        try {
+            logger.info("Testing email connection...");
+            
+            ContactMessage testMessage = new ContactMessage();
+            testMessage.setName("Email Test");
+            testMessage.setEmail("gouravkrsah78@gmail.com");
+            testMessage.setSubject("Email Configuration Test");
+            testMessage.setMessage("This is a test to verify email configuration is working properly.");
+            
+            emailService.sendContactMessage(testMessage);
+            
+            Map<String, String> response = new HashMap<>();
+            response.put("status", "success");
+            response.put("message", "Email test completed! Check logs for details.");
+            
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            logger.error("Email test failed", e);
+            
+            Map<String, String> response = new HashMap<>();
+            response.put("status", "error");
+            response.put("message", "Email test failed: " + e.getMessage());
+            
+            return ResponseEntity.status(500).body(response);
+        }
+    }
+
     private Map<String, String> createErrorResponse(String message) {
         Map<String, String> response = new HashMap<>();
         response.put("status", "error");
