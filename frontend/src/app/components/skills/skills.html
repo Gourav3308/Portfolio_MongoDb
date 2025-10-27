@@ -7,17 +7,24 @@
     </div>
   </div>
 
-  <!-- Skills Navbar -->
-  <app-skills-navbar 
-    [categories]="skillCategories"
-    [activeCategory]="selectedCategory"
-    [skillCounts]="getSkillCounts()"
-    (categorySelected)="onCategorySelected($event)">
-  </app-skills-navbar>
+  <!-- Loading State -->
+  <div *ngIf="loading" class="text-center py-5">
+    <app-loading-spinner size="large" message="Loading skills..."></app-loading-spinner>
+  </div>
 
-  <!-- Category Skills View -->
-  <app-category-skills 
-    *ngIf="selectedCategory"
+  <!-- Skills Content -->
+  <div *ngIf="!loading">
+    <!-- Skills Navbar -->
+    <app-skills-navbar 
+      [categories]="skillCategories"
+      [activeCategory]="selectedCategory"
+      [skillCounts]="getSkillCounts()"
+      (categorySelected)="onCategorySelected($event)">
+    </app-skills-navbar>
+
+    <!-- Category Skills View -->
+    <app-category-skills 
+      *ngIf="selectedCategory"
     [category]="selectedCategory"
     [skills]="getSkillsByCategory(selectedCategory)"
     (backToSkills)="onBackToSkills()">
@@ -81,6 +88,14 @@
           <div class="stat-label">Expert Level</div>
         </div>
       </div>
+    </div>
+  </div>
+  
+  <!-- Error State -->
+  <div *ngIf="!loading && skills.length === 0" class="text-center py-5">
+    <div class="alert alert-warning">
+      <i class="fas fa-exclamation-triangle me-2"></i>
+      Unable to load skills. Please try again later.
     </div>
   </div>
 </div>

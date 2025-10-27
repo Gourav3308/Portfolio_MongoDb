@@ -1,5 +1,11 @@
 server:
   port: ${PORT:8080}
+  servlet:
+    session:
+      timeout: 30m
+  tomcat:
+    connection-timeout: 20000
+    keep-alive-timeout: 30000
 
 spring:
   profiles:
@@ -35,6 +41,10 @@ spring:
 app:
   contact:
     email: ${CONTACT_EMAIL:gouravkrsah78@gmail.com}
+  keep-alive:
+    enabled: true
+    interval: 240000  # 4 minutes
+    health-check-interval: 600000  # 10 minutes
 
 logging:
   level:
@@ -42,6 +52,7 @@ logging:
     org.springframework.data.mongodb: WARN
     org.springframework.mail: INFO
     org.springframework.security: WARN
+    org.springframework.scheduling: INFO
 
 management:
   endpoints:
@@ -51,3 +62,6 @@ management:
   endpoint:
     health:
       show-details: when-authorized
+  health:
+    defaults:
+      enabled: true

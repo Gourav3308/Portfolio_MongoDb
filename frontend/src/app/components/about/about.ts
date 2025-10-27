@@ -3,11 +3,12 @@ import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { PersonalInfo } from '../../models/personal-info.model';
 import { PortfolioService } from '../../services/portfolio';
+import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
 
 @Component({
   selector: 'app-about',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, LoadingSpinnerComponent],
   templateUrl: './about.html',
   styleUrls: ['./about.scss']
 })

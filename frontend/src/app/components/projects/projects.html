@@ -8,7 +8,13 @@
   </div>
 
   <div class="container">
-    <div class="row">
+    <!-- Loading State -->
+    <div *ngIf="loading" class="text-center py-5">
+      <app-loading-spinner size="large" message="Loading projects..."></app-loading-spinner>
+    </div>
+
+    <!-- Projects Content -->
+    <div *ngIf="!loading && projects.length > 0" class="row">
       <div *ngFor="let project of projects" class="col-12 mb-4">
         <div class="project-card">
           <div class="card-header">
@@ -57,6 +63,14 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="!loading && projects.length === 0" class="text-center py-5">
+      <div class="alert alert-info">
+        <i class="fas fa-info-circle me-2"></i>
+        No projects found. Please check back later.
       </div>
     </div>
   </div>

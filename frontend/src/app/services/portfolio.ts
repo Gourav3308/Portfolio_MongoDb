@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { catchError, Observable, retry, throwError, timeout } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Certification } from '../models/certification.model';
 import { Education } from '../models/education.model';
@@ -13,14 +13,63 @@ import { Skill } from '../models/skill.model';
   providedIn: 'root'
 })
 export class PortfolioService {
-  // Production API URL - Updated for Render deployment
-  private apiUrl = environment.production ? environment.apiUrl : 'https://portfolio-back-v6uj.onrender.com/api';
+  // Use environment-specific API URL
+  private apiUrl = environment.apiUrl;
+  private maxRetries = 3;
+  private retryDelay = 2000; // 2 seconds
 
   constructor(private http: HttpClient) { }
 
+  // Generic error handler
+  private handleError(error: HttpErrorResponse) {
+    let errorMessage = 'An unknown error occurred!';
+    
+    if (error.error instanceof ErrorEvent) {
+      // Client-side error
+      errorMessage = `Client Error: ${error.error.message}`;
+    } else {
+      // Server-side error
+      switch (error.status) {
+        case 0:
+          errorMessage = 'Backend server is not responding. Please try again in a few moments.';
+          break;
+        case 404:
+          errorMessage = 'Resource not found';
+          break;
+        case 500:
+          errorMessage = 'Internal server error';
+          break;
+        case 503:
+          errorMessage = 'Service temporarily unavailable. The server may be starting up.';
+          break;
+        default:
+          errorMessage = `Server Error: ${error.status} - ${error.message}`;
+      }
+    }
+    
+    console.error('API Error:', errorMessage);
+    return throwError(() => new Error(errorMessage));
+  }
+
+  // Generic retry logic
+  private retryRequest<T>(request: Observable<T>): Observable<T> {
+    return request.pipe(
+      timeout(15000), // 15 second timeout
+      retry({
+        count: this.maxRetries,
+        delay: (error, retryCount) => {
+          console.log(`Retry attempt ${retryCount} for API call`);
+          return new Promise(resolve => setTimeout(resolve, this.retryDelay * retryCount));
+        }
+      }),
+      catchError(this.handleError)
+    );
+  }
+
   // Personal Info methods
   getPersonalInfo(): Observable<PersonalInfo[]> {
-    return this.http.get<PersonalInfo[]>(`${this.apiUrl}/personal-info`);
+    console.log('Making request to:', `${this.apiUrl}/personal-info`);
+    return this.retryRequest(this.http.get<PersonalInfo[]>(`${this.apiUrl}/personal-info`));
   }
 
   getPersonalInfoById(id: string): Observable<PersonalInfo> {
@@ -41,19 +90,20 @@ export class PortfolioService {
 
   // Project methods
   getProjects(): Observable<Project[]> {
-    return this.http.get<Project[]>(`${this.apiUrl}/projects`);
+    console.log('Making request to:', `${this.apiUrl}/projects`);
+    return this.retryRequest(this.http.get<Project[]>(`${this.apiUrl}/projects`));
   }
 
   getProjectById(id: string): Observable<Project> {
-    return this.http.get<Project>(`${this.apiUrl}/projects/${id}`);
+    return this.retryRequest(this.http.get<Project>(`${this.apiUrl}/projects/${id}`));
   }
 
   getProjectsByCategory(category: string): Observable<Project[]> {
-    return this.http.get<Project[]>(`${this.apiUrl}/projects/category/${category}`);
+    return this.retryRequest(this.http.get<Project[]>(`${this.apiUrl}/projects/category/${category}`));
   }
 
   getCurrentProjects(): Observable<Project[]> {
-    return this.http.get<Project[]>(`${this.apiUrl}/projects/current`);
+    return this.retryRequest(this.http.get<Project[]>(`${this.apiUrl}/projects/current`));
   }
 
   createProject(project: Project): Observable<Project> {
@@ -70,19 +120,20 @@ export class PortfolioService {
 
   // Skill methods
   getSkills(): Observable<Skill[]> {
-    return this.http.get<Skill[]>(`${this.apiUrl}/skills`);
+    console.log('Making request to:', `${this.apiUrl}/skills`);
+    return this.retryRequest(this.http.get<Skill[]>(`${this.apiUrl}/skills`));
   }
 
   getSkillById(id: string): Observable<Skill> {
-    return this.http.get<Skill>(`${this.apiUrl}/skills/${id}`);
+    return this.retryRequest(this.http.get<Skill>(`${this.apiUrl}/skills/${id}`));
   }
 
   getSkillsByCategory(category: string): Observable<Skill[]> {
-    return this.http.get<Skill[]>(`${this.apiUrl}/skills/category/${category}`);
+    return this.retryRequest(this.http.get<Skill[]>(`${this.apiUrl}/skills/category/${category}`));
   }
 
   getSkillsByMinProficiency(minProficiency: number): Observable<Skill[]> {
-    return this.http.get<Skill[]>(`${this.apiUrl}/skills/proficiency/${minProficiency}`);
+    return this.retryRequest(this.http.get<Skill[]>(`${this.apiUrl}/skills/proficiency/${minProficiency}`));
   }
 
   createSkill(skill: Skill): Observable<Skill> {
@@ -99,11 +150,12 @@ export class PortfolioService {
 
   // Education methods
   getEducation(): Observable<Education[]> {
-    return this.http.get<Education[]>(`${this.apiUrl}/education`);
+    console.log('Making request to:', `${this.apiUrl}/education`);
+    return this.retryRequest(this.http.get<Education[]>(`${this.apiUrl}/education`));
   }
 
   getEducationById(id: string): Observable<Education> {
-    return this.http.get<Education>(`${this.apiUrl}/education/${id}`);
+    return this.retryRequest(this.http.get<Education>(`${this.apiUrl}/education/${id}`));
   }
 
   createEducation(education: Education): Observable<Education> {
@@ -120,19 +172,20 @@ export class PortfolioService {
 
   // Experience methods
   getExperience(): Observable<Experience[]> {
-    return this.http.get<Experience[]>(`${this.apiUrl}/experience`);
+    console.log('Making request to:', `${this.apiUrl}/experience`);
+    return this.retryRequest(this.http.get<Experience[]>(`${this.apiUrl}/experience`));
   }
 
   getExperienceById(id: string): Observable<Experience> {
-    return this.http.get<Experience>(`${this.apiUrl}/experience/${id}`);
+    return this.retryRequest(this.http.get<Experience>(`${this.apiUrl}/experience/${id}`));
   }
 
   getCurrentExperience(): Observable<Experience[]> {
-    return this.http.get<Experience[]>(`${this.apiUrl}/experience/current`);
+    return this.retryRequest(this.http.get<Experience[]>(`${this.apiUrl}/experience/current`));
   }
 
   getExperienceByType(type: string): Observable<Experience[]> {
-    return this.http.get<Experience[]>(`${this.apiUrl}/experience/type/${type}`);
+    return this.retryRequest(this.http.get<Experience[]>(`${this.apiUrl}/experience/type/${type}`));
   }
 
   createExperience(experience: Experience): Observable<Experience> {
@@ -149,19 +202,20 @@ export class PortfolioService {
 
   // Certification methods
   getCertifications(): Observable<Certification[]> {
-    return this.http.get<Certification[]>(`${this.apiUrl}/certifications`);
+    console.log('Making request to:', `${this.apiUrl}/certifications`);
+    return this.retryRequest(this.http.get<Certification[]>(`${this.apiUrl}/certifications`));
   }
 
   getCertificationById(id: string): Observable<Certification> {
-    return this.http.get<Certification>(`${this.apiUrl}/certifications/${id}`);
+    return this.retryRequest(this.http.get<Certification>(`${this.apiUrl}/certifications/${id}`));
   }
 
   getCertificationsByStatus(status: string): Observable<Certification[]> {
-    return this.http.get<Certification[]>(`${this.apiUrl}/certifications/status/${status}`);
+    return this.retryRequest(this.http.get<Certification[]>(`${this.apiUrl}/certifications/status/${status}`));
   }
 
   getCertificationsByOrganization(organization: string): Observable<Certification[]> {
-    return this.http.get<Certification[]>(`${this.apiUrl}/certifications/organization/${organization}`);
+    return this.retryRequest(this.http.get<Certification[]>(`${this.apiUrl}/certifications/organization/${organization}`));
   }
 
   createCertification(certification: Certification): Observable<Certification> {

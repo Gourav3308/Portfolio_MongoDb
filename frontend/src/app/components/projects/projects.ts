@@ -3,11 +3,12 @@ import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Project } from '../../models/project.model';
 import { PortfolioService } from '../../services/portfolio';
+import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
 
 @Component({
   selector: 'app-projects',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, LoadingSpinnerComponent],
   templateUrl: './projects.html',
   styleUrls: ['./projects.scss']
 })

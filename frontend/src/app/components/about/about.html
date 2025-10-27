@@ -3,7 +3,13 @@
     <div class="col-lg-8 mx-auto">
       <h1 class="display-4 text-center mb-5">About Me</h1>
       
-      <div class="row mb-5" *ngIf="personalInfo">
+      <!-- Loading State -->
+      <div *ngIf="loading" class="text-center py-5">
+        <app-loading-spinner size="large" message="Loading personal information..."></app-loading-spinner>
+      </div>
+      
+      <!-- Personal Info Content -->
+      <div class="row mb-5" *ngIf="!loading && personalInfo">
         <div class="col-md-4 text-center mb-4">
           <img [src]="'https://via.placeholder.com/300x300/007bff/ffffff?text=' + personalInfo.name" 
                alt="Profile" class="img-fluid rounded-circle shadow-lg">
@@ -28,7 +34,15 @@
         </div>
       </div>
       
-      <div class="row">
+      <!-- Error State -->
+      <div *ngIf="!loading && !personalInfo" class="text-center py-5">
+        <div class="alert alert-warning">
+          <i class="fas fa-exclamation-triangle me-2"></i>
+          Unable to load personal information. Please try again later.
+        </div>
+      </div>
+      
+      <div class="row" *ngIf="!loading">
         <div class="col-lg-6 mb-4">
           <div class="card h-100">
             <div class="card-body">
@@ -47,7 +61,7 @@
         </div>
       </div>
       
-      <div class="text-center mt-5">
+      <div class="text-center mt-5" *ngIf="!loading">
         <a routerLink="/contact" class="btn btn-primary btn-lg">Get In Touch</a>
       </div>
     </div>

@@ -8,7 +8,13 @@
   </div>
 
   <div class="container">
-    <div class="row">
+    <!-- Loading State -->
+    <div *ngIf="loading" class="text-center py-5">
+      <app-loading-spinner size="large" message="Loading experience..."></app-loading-spinner>
+    </div>
+
+    <!-- Experience Content -->
+    <div *ngIf="!loading && experienceList.length > 0" class="row">
       <div *ngFor="let experience of experienceList" class="col-12 mb-4">
         <div class="experience-card">
           <div class="card-header">
@@ -62,6 +68,14 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="!loading && experienceList.length === 0" class="text-center py-5">
+      <div class="alert alert-info">
+        <i class="fas fa-info-circle me-2"></i>
+        No experience records found. Please check back later.
       </div>
     </div>
   </div>

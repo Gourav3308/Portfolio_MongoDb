@@ -2,16 +2,18 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Certification } from '../../models/certification.model';
 import { PortfolioService } from '../../services/portfolio';
+import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
 
 @Component({
   selector: 'app-certifications',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, LoadingSpinnerComponent],
   templateUrl: './certifications.html',
   styleUrls: ['./certifications.scss']
 })
 export class CertificationsComponent implements OnInit {
   certificationList: Certification[] = [];
+  loading = true;
 
   constructor(private portfolioService: PortfolioService) {}
 
@@ -23,9 +25,11 @@ export class CertificationsComponent implements OnInit {
     this.portfolioService.getCertifications().subscribe({
       next: (certifications) => {
         this.certificationList = certifications;
+        this.loading = false;
       },
       error: (error) => {
         console.error('Error loading certifications:', error);
+        this.loading = false;
       }
     });
   }

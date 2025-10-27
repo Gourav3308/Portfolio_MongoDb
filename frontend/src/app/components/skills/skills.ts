@@ -2,13 +2,14 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Skill } from '../../models/skill.model';
 import { PortfolioService } from '../../services/portfolio';
+import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
 import { CategorySkillsComponent } from './category-skills/category-skills';
 import { SkillsNavbarComponent } from './skills-navbar/skills-navbar';
 
 @Component({
   selector: 'app-skills',
   standalone: true,
-  imports: [CommonModule, SkillsNavbarComponent, CategorySkillsComponent],
+  imports: [CommonModule, SkillsNavbarComponent, CategorySkillsComponent, LoadingSpinnerComponent],
   templateUrl: './skills.html',
   styleUrls: ['./skills.scss']
 })
