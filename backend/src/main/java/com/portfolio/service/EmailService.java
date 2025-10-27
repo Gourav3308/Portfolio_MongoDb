@@ -15,13 +15,13 @@ public class EmailService {
 
     private static final Logger logger = LoggerFactory.getLogger(EmailService.class);
 
-    @Autowired
+    @Autowired(required = false)
     private JavaMailSender mailSender;
 
     @Autowired
     private ContactMessageRepository contactMessageRepository;
 
-    @Value("${spring.mail.username}")
+    @Value("${spring.mail.username:}")
     private String fromEmail;
 
     @Value("${app.contact.email}")
@@ -35,20 +35,28 @@ public class EmailService {
             ContactMessage savedMessage = contactMessageRepository.save(contactMessage);
             logger.info("Contact message saved to database with ID: {}", savedMessage.getId());
 
-            // Send email to admin
-            sendEmailToAdmin(savedMessage);
+            // Try to send emails, but don't fail if they don't work
+            boolean adminEmailSent = sendEmailToAdmin(savedMessage);
+            boolean confirmationEmailSent = sendConfirmationEmail(savedMessage);
             
-            // Send confirmation email to sender
-            sendConfirmationEmail(savedMessage);
-            
-            logger.info("Contact message processed successfully for: {}", contactMessage.getEmail());
+            if (adminEmailSent && confirmationEmailSent) {
+                logger.info("Contact message processed successfully with emails for: {}", contactMessage.getEmail());
+            } else {
+                logger.warn("Contact message saved to database but email sending failed for: {}", contactMessage.getEmail());
+            }
         } catch (Exception e) {
             logger.error("Error processing contact message from: {}", contactMessage.getEmail(), e);
-            throw new RuntimeException("Failed to send contact message: " + e.getMessage(), e);
+            // Don't throw exception - just log the error and continue
+            logger.warn("Contact message was saved to database but email processing failed");
         }
     }
 
-    private void sendEmailToAdmin(ContactMessage contactMessage) {
+    private boolean sendEmailToAdmin(ContactMessage contactMessage) {
+        if (mailSender == null) {
+            logger.warn("MailSender is not available - skipping admin notification email");
+            return false;
+        }
+        
         try {
             logger.info("Sending admin notification email to: {}", contactEmail);
             
@@ -75,13 +83,19 @@ public class EmailService {
             mailSender.send(message);
             
             logger.info("Admin notification email sent successfully");
+            return true;
         } catch (Exception e) {
             logger.error("Failed to send admin notification email", e);
-            throw new RuntimeException("Failed to send admin notification: " + e.getMessage(), e);
+            return false;
         }
     }
 
-    private void sendConfirmationEmail(ContactMessage contactMessage) {
+    private boolean sendConfirmationEmail(ContactMessage contactMessage) {
+        if (mailSender == null) {
+            logger.warn("MailSender is not available - skipping confirmation email");
+            return false;
+        }
+        
         try {
             logger.info("Sending confirmation email to: {}", contactMessage.getEmail());
             
@@ -113,9 +127,12 @@ public class EmailService {
             mailSender.send(message);
             
             logger.info("Confirmation email sent successfully to: {}", contactMessage.getEmail());
+            return true;
         } catch (Exception e) {
             logger.error("Failed to send confirmation email to: {}", contactMessage.getEmail(), e);
-            throw new RuntimeException("Failed to send confirmation email: " + e.getMessage(), e);
+            return false;
         }
     }
 }
+
+

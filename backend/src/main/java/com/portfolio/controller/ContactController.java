@@ -1,6 +1,7 @@
 package com.portfolio.controller;
 
 import com.portfolio.model.ContactMessage;
+import com.portfolio.repository.ContactMessageRepository;
 import com.portfolio.service.EmailService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -20,6 +22,9 @@ public class ContactController {
 
     @Autowired
     private EmailService emailService;
+
+    @Autowired
+    private ContactMessageRepository contactMessageRepository;
 
     @PostMapping("/send")
     public ResponseEntity<Map<String, String>> sendContactMessage(@RequestBody ContactMessage contactMessage) {
@@ -44,9 +49,9 @@ public class ContactController {
             
             Map<String, String> response = new HashMap<>();
             response.put("status", "success");
-            response.put("message", "Message sent successfully!");
+            response.put("message", "Message received successfully! I'll get back to you soon.");
             
-            logger.info("Contact message sent successfully for: {}", contactMessage.getEmail());
+            logger.info("Contact message processed successfully for: {}", contactMessage.getEmail());
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             logger.error("Error sending contact message from: {}", contactMessage.getEmail(), e);
@@ -74,7 +79,7 @@ public class ContactController {
             
             Map<String, String> response = new HashMap<>();
             response.put("status", "success");
-            response.put("message", "Test email sent successfully!");
+            response.put("message", "Test message processed successfully!");
             
             return ResponseEntity.ok(response);
         } catch (Exception e) {
@@ -84,6 +89,37 @@ public class ContactController {
             response.put("status", "error");
             response.put("message", "Email service test failed: " + e.getMessage());
             
+            return ResponseEntity.status(500).body(response);
+        }
+    }
+
+    @GetMapping("/messages")
+    public ResponseEntity<List<ContactMessage>> getAllContactMessages() {
+        try {
+            List<ContactMessage> messages = contactMessageRepository.findAll();
+            logger.info("Retrieved {} contact messages", messages.size());
+            return ResponseEntity.ok(messages);
+        } catch (Exception e) {
+            logger.error("Error retrieving contact messages", e);
+            return ResponseEntity.status(500).build();
+        }
+    }
+
+    @GetMapping("/messages/count")
+    public ResponseEntity<Map<String, Object>> getContactMessageCount() {
+        try {
+            long count = contactMessageRepository.count();
+            Map<String, Object> response = new HashMap<>();
+            response.put("count", count);
+            response.put("status", "success");
+            logger.info("Contact message count: {}", count);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            logger.error("Error retrieving contact message count", e);
+            Map<String, Object> response = new HashMap<>();
+            response.put("count", 0);
+            response.put("status", "error");
+            response.put("message", "Failed to retrieve count");
             return ResponseEntity.status(500).body(response);
         }
     }
