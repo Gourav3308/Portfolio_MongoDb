@@ -1,7 +1,8 @@
 {
-  "buildCommand": "cd frontend && npm run build",
-  "outputDirectory": "frontend/dist/portfolio-frontend/browser",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist/portfolio-frontend/browser",
   "framework": "angular",
+  "installCommand": "npm install",
   "rewrites": [
     {
       "source": "/(.*)",
