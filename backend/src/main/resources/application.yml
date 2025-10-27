@@ -15,22 +15,20 @@ spring:
   
   mail:
     host: smtp.gmail.com
-    port: 465
+    port: 587
     username: gouravkrsah78@gmail.com
     password: byqmpgupkojqvzwv
     properties:
       mail:
         smtp:
           auth: true
-          ssl:
+          starttls:
             enable: true
+            required: true
+          ssl:
             trust: smtp.gmail.com
           connectiontimeout: 30000
           timeout: 30000
-          socketFactory:
-            port: 465
-            class: javax.net.ssl.SSLSocketFactory
-            fallback: false
 
 app:
   contact:

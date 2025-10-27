@@ -54,17 +54,20 @@ public class EmailService {
         try {
             logger.info("Starting to process contact message from: {}", contactMessage.getEmail());
             
+            // Log email configuration status
+            logger.info("Email Configuration Status:");
+            logger.info("- MailSender available: {}", mailSender != null);
+            logger.info("- From email configured: {}", fromEmail != null && !fromEmail.trim().isEmpty());
+            logger.info("- Contact email configured: {}", contactEmail != null && !contactEmail.trim().isEmpty());
+            logger.info("- SendGrid API Key configured: {}", !sendGridApiKey.isEmpty());
+            logger.info("- Resend API Key configured: {}", !resendApiKey.isEmpty());
+            
             // Save to database first
             ContactMessage savedMessage = contactMessageRepository.save(contactMessage);
             logger.info("Contact message saved to database with ID: {}", savedMessage.getId());
 
             // Try to send emails using SendGrid API first, fallback to SMTP
             boolean emailsSent = false;
-            
-            logger.info("SendGrid API Key configured: {}", !sendGridApiKey.isEmpty());
-            logger.info("SendGrid API Key length: {}", sendGridApiKey.length());
-            logger.info("Resend API Key configured: {}", !resendApiKey.isEmpty());
-            logger.info("Resend API Key length: {}", resendApiKey.length());
             
             // Try Resend first (easier setup)
             if (!resendApiKey.isEmpty()) {
@@ -99,6 +102,16 @@ public class EmailService {
     private boolean sendEmailToAdmin(ContactMessage contactMessage) {
         if (mailSender == null) {
             logger.warn("MailSender is not available - skipping admin notification email");
+            return false;
+        }
+        
+        if (fromEmail == null || fromEmail.trim().isEmpty()) {
+            logger.warn("From email is not configured - skipping admin notification email");
+            return false;
+        }
+        
+        if (contactEmail == null || contactEmail.trim().isEmpty()) {
+            logger.warn("Contact email is not configured - skipping admin notification email");
             return false;
         }
         
@@ -138,6 +151,16 @@ public class EmailService {
     private boolean sendConfirmationEmail(ContactMessage contactMessage) {
         if (mailSender == null) {
             logger.warn("MailSender is not available - skipping confirmation email");
+            return false;
+        }
+        
+        if (fromEmail == null || fromEmail.trim().isEmpty()) {
+            logger.warn("From email is not configured - skipping confirmation email");
+            return false;
+        }
+        
+        if (contactMessage.getEmail() == null || contactMessage.getEmail().trim().isEmpty()) {
+            logger.warn("Recipient email is not available - skipping confirmation email");
             return false;
         }
         
