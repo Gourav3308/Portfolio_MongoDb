@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { environment } from '../../environments/environment';
 import { PersonalInfo } from '../../models/personal-info.model';
 import { PortfolioService } from '../../services/portfolio';
 
@@ -65,7 +66,7 @@ export class ContactComponent implements OnInit {
     this.messageStatus = null;
     
     // Send email via backend
-    this.http.post('http://localhost:8080/api/contact/send', this.contactForm)
+    this.http.post(`${environment.apiUrl}/contact/send`, this.contactForm)
       .subscribe({
         next: (response) => {
           this.messageStatus = {
