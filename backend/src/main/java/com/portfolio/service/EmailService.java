@@ -54,9 +54,15 @@ public class EmailService {
             // Try to send emails using SendGrid API first, fallback to SMTP
             boolean emailsSent = false;
             
+            logger.info("SendGrid API Key configured: {}", !sendGridApiKey.isEmpty());
+            logger.info("SendGrid API Key length: {}", sendGridApiKey.length());
+            logger.info("SendGrid From Email: {}", sendGridFromEmail);
+            
             if (!sendGridApiKey.isEmpty()) {
                 logger.info("Attempting to send emails via SendGrid API");
                 emailsSent = sendEmailsViaSendGrid(savedMessage);
+            } else {
+                logger.warn("SendGrid API Key is empty - check SENDGRID_API_KEY environment variable");
             }
             
             if (!emailsSent) {
