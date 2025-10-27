@@ -47,7 +47,8 @@ public class EmailService {
     @Value("${SENDGRID_FROM_EMAIL:gouravkrsah78@gmail.com}")
     private String sendGridFromEmail;
 
-    private final RestTemplate restTemplate = new RestTemplate();
+    @Autowired
+    private RestTemplate restTemplate;
 
     public void sendContactMessage(ContactMessage contactMessage) {
         try {
