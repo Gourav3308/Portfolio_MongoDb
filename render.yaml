@@ -25,3 +25,7 @@ services:
         sync: false
       - key: SENDGRID_FROM_EMAIL
         value: gouravkrsah78@gmail.com
+      - key: RESEND_API_KEY
+        sync: false
+      - key: RESEND_FROM_EMAIL
+        value: gouravkrsah78@gmail.com

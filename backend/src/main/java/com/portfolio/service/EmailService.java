@@ -38,10 +38,11 @@ public class EmailService {
     @Value("${SENDGRID_API_KEY:}")
     private String sendGridApiKey;
 
-    @Value("${SENDGRID_FROM_EMAIL:gouravkrsah78@gmail.com}")
-    private String sendGridFromEmail;
+    @Value("${RESEND_API_KEY:}")
+    private String resendApiKey;
 
-    private final RestTemplate restTemplate = new RestTemplate();
+    @Value("${RESEND_FROM_EMAIL:gouravkrsah78@gmail.com}")
+    private String resendFromEmail;
 
     public void sendContactMessage(ContactMessage contactMessage) {
         try {
@@ -56,13 +57,18 @@ public class EmailService {
             
             logger.info("SendGrid API Key configured: {}", !sendGridApiKey.isEmpty());
             logger.info("SendGrid API Key length: {}", sendGridApiKey.length());
-            logger.info("SendGrid From Email: {}", sendGridFromEmail);
+            logger.info("Resend API Key configured: {}", !resendApiKey.isEmpty());
+            logger.info("Resend API Key length: {}", resendApiKey.length());
             
-            if (!sendGridApiKey.isEmpty()) {
+            // Try Resend first (easier setup)
+            if (!resendApiKey.isEmpty()) {
+                logger.info("Attempting to send emails via Resend API");
+                emailsSent = sendEmailsViaResend(savedMessage);
+            } else if (!sendGridApiKey.isEmpty()) {
                 logger.info("Attempting to send emails via SendGrid API");
                 emailsSent = sendEmailsViaSendGrid(savedMessage);
             } else {
-                logger.warn("SendGrid API Key is empty - check SENDGRID_API_KEY environment variable");
+                logger.warn("No email API keys configured - check RESEND_API_KEY or SENDGRID_API_KEY environment variables");
             }
             
             if (!emailsSent) {
@@ -163,6 +169,100 @@ public class EmailService {
             return true;
         } catch (Exception e) {
             logger.error("Failed to send confirmation email to: {}", contactMessage.getEmail(), e);
+            return false;
+        }
+    }
+
+    private boolean sendEmailsViaResend(ContactMessage contactMessage) {
+        try {
+            String url = "https://api.resend.com/emails";
+            
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.setBearerAuth(resendApiKey);
+
+            // Send admin notification
+            boolean adminSent = sendAdminNotificationViaResend(contactMessage, headers, url);
+            
+            // Send confirmation email
+            boolean confirmationSent = sendConfirmationEmailViaResend(contactMessage, headers, url);
+            
+            return adminSent && confirmationSent;
+        } catch (Exception e) {
+            logger.error("Failed to send emails via Resend", e);
+            return false;
+        }
+    }
+
+    private boolean sendAdminNotificationViaResend(ContactMessage contactMessage, HttpHeaders headers, String url) {
+        try {
+            Map<String, Object> emailData = new HashMap<>();
+            emailData.put("from", resendFromEmail);
+            emailData.put("to", new String[]{contactEmail});
+            emailData.put("subject", "New Contact Message: " + contactMessage.getSubject());
+            
+            String emailBody = String.format(
+                "You have received a new contact message:\n\n" +
+                "Name: %s\n" +
+                "Email: %s\n" +
+                "Subject: %s\n\n" +
+                "Message:\n%s\n\n" +
+                "Sent at: %s",
+                contactMessage.getName(),
+                contactMessage.getEmail(),
+                contactMessage.getSubject(),
+                contactMessage.getMessage(),
+                contactMessage.getCreatedAt()
+            );
+            
+            emailData.put("text", emailBody);
+
+            HttpEntity<Map<String, Object>> request = new HttpEntity<>(emailData, headers);
+            ResponseEntity<String> response = restTemplate.postForEntity(url, request, String.class);
+            
+            logger.info("Admin notification sent via Resend: {}", response.getStatusCode());
+            return response.getStatusCode().is2xxSuccessful();
+        } catch (Exception e) {
+            logger.error("Failed to send admin notification via Resend", e);
+            return false;
+        }
+    }
+
+    private boolean sendConfirmationEmailViaResend(ContactMessage contactMessage, HttpHeaders headers, String url) {
+        try {
+            Map<String, Object> emailData = new HashMap<>();
+            emailData.put("from", resendFromEmail);
+            emailData.put("to", new String[]{contactMessage.getEmail()});
+            emailData.put("subject", "Thank you for contacting Gourav!");
+            
+            String confirmationBody = String.format(
+                "Dear %s,\n\n" +
+                "Thank you for reaching out! I have received your message regarding '%s' and will get back to you soon.\n\n" +
+                "Your message:\n%s\n\n" +
+                "I appreciate your interest and look forward to connecting with you.\n\n" +
+                "Best regards,\n" +
+                "Gourav\n" +
+                "Full Stack Developer\n\n" +
+                "---\n" +
+                "Contact Information:\n" +
+                "Email: gouravkrsah78@gmail.com\n" +
+                "Phone: +91 7903840357\n" +
+                "GitHub: https://github.com/Gourav3308\n" +
+                "LinkedIn: https://www.linkedin.com/in/gourav-java-dev/",
+                contactMessage.getName(),
+                contactMessage.getSubject(),
+                contactMessage.getMessage()
+            );
+            
+            emailData.put("text", confirmationBody);
+
+            HttpEntity<Map<String, Object>> request = new HttpEntity<>(emailData, headers);
+            ResponseEntity<String> response = restTemplate.postForEntity(url, request, String.class);
+            
+            logger.info("Confirmation email sent via Resend: {}", response.getStatusCode());
+            return response.getStatusCode().is2xxSuccessful();
+        } catch (Exception e) {
+            logger.error("Failed to send confirmation email via Resend", e);
             return false;
         }
     }
