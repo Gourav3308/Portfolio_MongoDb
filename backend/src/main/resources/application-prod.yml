@@ -2,6 +2,8 @@ server:
   port: ${PORT:8080}
 
 spring:
+  profiles:
+    active: prod
   data:
     mongodb:
       uri: ${SPRING_DATA_MONGODB_URI}
@@ -16,7 +18,7 @@ spring:
   mail:
     host: ${MAIL_HOST:smtp.gmail.com}
     port: ${MAIL_PORT:587}
-    username: ${MAIL_USERNAME:}
+    username: ${MAIL_USERNAME:gouravkrsah78@gmail.com}
     password: ${MAIL_PASSWORD:}
     properties:
       mail:

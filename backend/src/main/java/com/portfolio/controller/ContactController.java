@@ -6,6 +6,7 @@ import com.portfolio.service.EmailService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +26,18 @@ public class ContactController {
 
     @Autowired
     private ContactMessageRepository contactMessageRepository;
+
+    @Value("${spring.mail.host:NOT_SET}")
+    private String mailHost;
+
+    @Value("${spring.mail.port:NOT_SET}")
+    private String mailPort;
+
+    @Value("${spring.mail.username:NOT_SET}")
+    private String mailUsername;
+
+    @Value("${spring.profiles.active:NOT_SET}")
+    private String activeProfile;
 
     @PostMapping("/send")
     public ResponseEntity<Map<String, String>> sendContactMessage(@RequestBody ContactMessage contactMessage) {
@@ -122,6 +135,21 @@ public class ContactController {
             response.put("message", "Failed to retrieve count");
             return ResponseEntity.status(500).body(response);
         }
+    }
+
+    @GetMapping("/debug/config")
+    public ResponseEntity<Map<String, Object>> getDebugConfig() {
+        Map<String, Object> response = new HashMap<>();
+        response.put("activeProfile", activeProfile);
+        response.put("mailHost", mailHost);
+        response.put("mailPort", mailPort);
+        response.put("mailUsername", mailUsername);
+        response.put("status", "success");
+        
+        logger.info("Debug config - Profile: {}, Mail Host: {}, Mail Port: {}, Mail Username: {}", 
+                   activeProfile, mailHost, mailPort, mailUsername);
+        
+        return ResponseEntity.ok(response);
     }
 
     private Map<String, String> createErrorResponse(String message) {
