@@ -44,6 +44,11 @@ public class EmailService {
     @Value("${RESEND_FROM_EMAIL:gouravkrsah78@gmail.com}")
     private String resendFromEmail;
 
+    @Value("${SENDGRID_FROM_EMAIL:gouravkrsah78@gmail.com}")
+    private String sendGridFromEmail;
+
+    private final RestTemplate restTemplate = new RestTemplate();
+
     public void sendContactMessage(ContactMessage contactMessage) {
         try {
             logger.info("Starting to process contact message from: {}", contactMessage.getEmail());
