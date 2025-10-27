@@ -268,6 +268,9 @@ public class EmailService {
             ResponseEntity<String> response = restTemplate.postForEntity(url, request, String.class);
             
             logger.info("Admin notification sent via Resend: {}", response.getStatusCode());
+            if (!response.getStatusCode().is2xxSuccessful()) {
+                logger.error("Resend API error: {}", response.getBody());
+            }
             return response.getStatusCode().is2xxSuccessful();
         } catch (Exception e) {
             logger.error("Failed to send admin notification via Resend", e);
@@ -307,6 +310,9 @@ public class EmailService {
             ResponseEntity<String> response = restTemplate.postForEntity(url, request, String.class);
             
             logger.info("Confirmation email sent via Resend: {}", response.getStatusCode());
+            if (!response.getStatusCode().is2xxSuccessful()) {
+                logger.error("Resend API error: {}", response.getBody());
+            }
             return response.getStatusCode().is2xxSuccessful();
         } catch (Exception e) {
             logger.error("Failed to send confirmation email via Resend", e);
@@ -338,9 +344,14 @@ public class EmailService {
     private boolean sendAdminNotificationViaSendGrid(ContactMessage contactMessage, HttpHeaders headers, String url) {
         try {
             Map<String, Object> emailData = new HashMap<>();
+            
+            // SendGrid requires personalizations array
+            Map<String, Object> personalization = new HashMap<>();
+            personalization.put("to", new Object[]{Map.of("email", contactEmail, "name", "Gourav Kumar")});
+            personalization.put("subject", "New Contact Message: " + contactMessage.getSubject());
+            
+            emailData.put("personalizations", new Object[]{personalization});
             emailData.put("from", Map.of("email", sendGridFromEmail, "name", "Portfolio Contact Form"));
-            emailData.put("to", new Object[]{Map.of("email", contactEmail, "name", "Gourav Kumar")});
-            emailData.put("subject", "New Contact Message: " + contactMessage.getSubject());
             
             String emailBody = String.format(
                 "You have received a new contact message:\n\n" +
@@ -356,12 +367,18 @@ public class EmailService {
                 contactMessage.getCreatedAt()
             );
             
-            emailData.put("text", emailBody);
+            Map<String, Object> content = new HashMap<>();
+            content.put("type", "text/plain");
+            content.put("value", emailBody);
+            emailData.put("content", new Object[]{content});
 
             HttpEntity<Map<String, Object>> request = new HttpEntity<>(emailData, headers);
             ResponseEntity<String> response = restTemplate.postForEntity(url, request, String.class);
             
             logger.info("Admin notification sent via SendGrid: {}", response.getStatusCode());
+            if (!response.getStatusCode().is2xxSuccessful()) {
+                logger.error("SendGrid API error: {}", response.getBody());
+            }
             return response.getStatusCode().is2xxSuccessful();
         } catch (Exception e) {
             logger.error("Failed to send admin notification via SendGrid", e);
@@ -372,9 +389,14 @@ public class EmailService {
     private boolean sendConfirmationEmailViaSendGrid(ContactMessage contactMessage, HttpHeaders headers, String url) {
         try {
             Map<String, Object> emailData = new HashMap<>();
+            
+            // SendGrid requires personalizations array
+            Map<String, Object> personalization = new HashMap<>();
+            personalization.put("to", new Object[]{Map.of("email", contactMessage.getEmail(), "name", contactMessage.getName())});
+            personalization.put("subject", "Thank you for contacting Gourav!");
+            
+            emailData.put("personalizations", new Object[]{personalization});
             emailData.put("from", Map.of("email", sendGridFromEmail, "name", "Gourav Kumar"));
-            emailData.put("to", new Object[]{Map.of("email", contactMessage.getEmail(), "name", contactMessage.getName())});
-            emailData.put("subject", "Thank you for contacting Gourav!");
             
             String confirmationBody = String.format(
                 "Dear %s,\n\n" +
@@ -395,12 +417,18 @@ public class EmailService {
                 contactMessage.getMessage()
             );
             
-            emailData.put("text", confirmationBody);
+            Map<String, Object> content = new HashMap<>();
+            content.put("type", "text/plain");
+            content.put("value", confirmationBody);
+            emailData.put("content", new Object[]{content});
 
             HttpEntity<Map<String, Object>> request = new HttpEntity<>(emailData, headers);
             ResponseEntity<String> response = restTemplate.postForEntity(url, request, String.class);
             
             logger.info("Confirmation email sent via SendGrid: {}", response.getStatusCode());
+            if (!response.getStatusCode().is2xxSuccessful()) {
+                logger.error("SendGrid API error: {}", response.getBody());
+            }
             return response.getStatusCode().is2xxSuccessful();
         } catch (Exception e) {
             logger.error("Failed to send confirmation email via SendGrid", e);
