@@ -88,7 +88,7 @@ public class DataInitializer implements CommandLineRunner {
 
     private void initializeProjects() {
         List<Project> projects = Arrays.asList(
-            // HealthBridge Project
+            // 1) HealthBridge Project
             createProject(
                 "HealthBridge - Telehealth Platform",
                 "A comprehensive full-stack telehealth platform designed to bridge the gap between healthcare providers and patients. Built with modern web technologies to provide seamless virtual healthcare experiences.",
@@ -113,7 +113,28 @@ public class DataInitializer implements CommandLineRunner {
                 ),
                 "Full Stack"
             ),
-            // SmartBank Project
+            // 2) SchoolWeb Project
+            createProject(
+                "SchoolWeb",
+                "Modern school website with an Angular frontend and a Spring Boot backend. It provides public pages (home, facilities, gallery, notices, fees, contact) and an admin area for managing content such as student registrations and notices.",
+                "Angular, TypeScript, SCSS, Spring Boot, Spring Security, Spring Data JPA, Maven",
+                "https://github.com/Gourav3308/SchoolWeb",
+                "https://schoolweb-1-homv.onrender.com",
+                null,
+                LocalDate.of(2025, 9, 1),
+                null,
+                true,
+                Arrays.asList(
+                    "Responsive Angular UI for school information",
+                    "Secure Spring Boot API for notices, students, and fees",
+                    "Email notification support via pluggable service",
+                    "Admin area to manage students, notices, and content",
+                    "Production-ready split of frontend and backend apps",
+                    "Configurable CORS and security settings"
+                ),
+                "Full Stack"
+            ),
+            // 3) SmartBank Project
             createProject(
                 "SmartBank - Banking API System",
                 "A robust backend banking system providing secure APIs for account management, transaction processing, and administrative workflows. Implemented with enterprise-grade security and data integrity measures.",
@@ -138,7 +159,7 @@ public class DataInitializer implements CommandLineRunner {
                 ),
                 "Backend"
             ),
-            // Payment Gateway Project
+            // 4) Payment Gateway Project
             createProject(
                 "Spring Boot Payment Gateway Integration",
                 "A comprehensive payment processing system integrating Razorpay payment gateway with Spring Boot 3. Features secure authentication, transaction management, and administrative controls for seamless e-commerce operations.",
@@ -164,27 +185,6 @@ public class DataInitializer implements CommandLineRunner {
                     "Comprehensive Error Handling"
                 ),
                 "Backend"
-            ),
-            // SchoolWeb Project
-            createProject(
-                "SchoolWeb",
-                "Modern school website with an Angular frontend and a Spring Boot backend. It provides public pages (home, facilities, gallery, notices, fees, contact) and an admin area for managing content such as student registrations and notices.",
-                "Angular, TypeScript, SCSS, Spring Boot, Spring Security, Spring Data JPA, Maven",
-                "https://github.com/Gourav3308/SchoolWeb",
-                "https://schoolweb-1-homv.onrender.com",
-                null,
-                LocalDate.of(2025, 9, 1),
-                null,
-                true,
-                Arrays.asList(
-                    "Responsive Angular UI for school information",
-                    "Secure Spring Boot API for notices, students, and fees",
-                    "Email notification support via pluggable service",
-                    "Admin area to manage students, notices, and content",
-                    "Production-ready split of frontend and backend apps",
-                    "Configurable CORS and security settings"
-                ),
-                "Full Stack"
             )
         );
         

@@ -34,7 +34,20 @@ export class ProjectsComponent implements OnInit {
   loadProjects(): void {
     this.portfolioService.getProjects().subscribe({
       next: (projects) => {
-        this.projects = projects;
+        const desiredOrder = [
+          'HealthBridge - Telehealth Platform',
+          'SchoolWeb',
+          'SmartBank - Banking API System',
+          'Spring Boot Payment Gateway Integration'
+        ];
+        this.projects = [...projects].sort((a, b) => {
+          const ai = desiredOrder.indexOf(a.name);
+          const bi = desiredOrder.indexOf(b.name);
+          const av = ai === -1 ? Number.MAX_SAFE_INTEGER : ai;
+          const bv = bi === -1 ? Number.MAX_SAFE_INTEGER : bi;
+          if (av !== bv) return av - bv;
+          return a.name.localeCompare(b.name);
+        });
         this.loading = false;
       },
       error: (error) => {
