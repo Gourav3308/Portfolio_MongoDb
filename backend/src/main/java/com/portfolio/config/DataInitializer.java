@@ -164,6 +164,27 @@ public class DataInitializer implements CommandLineRunner {
                     "Comprehensive Error Handling"
                 ),
                 "Backend"
+            ),
+            // SchoolWeb Project
+            createProject(
+                "SchoolWeb",
+                "Modern school website with an Angular frontend and a Spring Boot backend. It provides public pages (home, facilities, gallery, notices, fees, contact) and an admin area for managing content such as student registrations and notices.",
+                "Angular, TypeScript, SCSS, Spring Boot, Spring Security, Spring Data JPA, Maven",
+                "https://github.com/Gourav3308/SchoolWeb",
+                "https://schoolweb-1-homv.onrender.com",
+                null,
+                LocalDate.of(2025, 9, 1),
+                null,
+                true,
+                Arrays.asList(
+                    "Responsive Angular UI for school information",
+                    "Secure Spring Boot API for notices, students, and fees",
+                    "Email notification support via pluggable service",
+                    "Admin area to manage students, notices, and content",
+                    "Production-ready split of frontend and backend apps",
+                    "Configurable CORS and security settings"
+                ),
+                "Full Stack"
             )
         );
         

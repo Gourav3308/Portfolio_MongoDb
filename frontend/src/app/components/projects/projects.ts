@@ -18,10 +18,11 @@ export class ProjectsComponent implements OnInit {
   private imageRetryState: Record<string, number> = {};
   private imageCandidatesMap: Record<string, string[]> = {};
   private customImageMap: Record<string, string> = {
-    'HealthBridge - Telehealth Platform': 'assets/images/healthbridge.jpg',
-    'SmartBank - Banking API System': 'assets/images/smartbank.jpg',
-    'Spring Boot Payment Gateway Integration': 'assets/images/springboot payemnt app.jpg',
-    'Schoolweb': 'assets/images/schoolweb.jpg'
+    // Use lowercase keys for robust matching
+    'healthbridge - telehealth platform': 'assets/images/healthbridge.jpg',
+    'smartbank - banking api system': 'assets/images/smartbank.jpg',
+    'spring boot payment gateway integration': 'assets/images/springboot payemnt app.jpg',
+    'schoolweb': 'assets/images/schoolweb.jpg'
   };
 
   constructor(private portfolioService: PortfolioService) {}
@@ -45,9 +46,10 @@ export class ProjectsComponent implements OnInit {
 
   getProjectImage(project: Project): string {
     const key = project.id || project.name;
-    // Direct mapping if provided
-    if (this.customImageMap[project.name]) {
-      return this.customImageMap[project.name];
+    // Direct mapping if provided (case-insensitive)
+    const mapped = this.customImageMap[(project.name || '').toLowerCase().trim()];
+    if (mapped) {
+      return mapped;
     }
     if (project.imageUrl && project.imageUrl.trim().length > 0) {
       return project.imageUrl;
