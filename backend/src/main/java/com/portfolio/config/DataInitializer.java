@@ -94,7 +94,7 @@ public class DataInitializer implements CommandLineRunner {
                 "A comprehensive full-stack telehealth platform designed to bridge the gap between healthcare providers and patients. Built with modern web technologies to provide seamless virtual healthcare experiences.",
                 "Spring Boot, Angular, TypeScript, MySQL, OAuth2, JWT, RBAC, Spring Security, REST APIs",
                 "https://github.com/Gourav3308/Healthbridge_Prj",
-                null, // No live URL as requested
+                "https://healthbridge-frontend-jj1l.onrender.com/",
                 "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAwIiBoZWlnaHQ9IjQwMCIgdmlld0JveD0iMCAwIDUwMCA0MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI1MDAiIGhlaWdodD0iNDAwIiBmaWxsPSIjNGI2M2YxIi8+Cjx0ZXh0IHg9IjI1MCIgeT0iMjAwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMzIiIGZpbGw9IiNmZmZmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkhlYWx0aEJyaWRnZTwvdGV4dD4KPC9zdmc+", // HealthBridge project image
                 LocalDate.of(2025, 4, 1),
                 LocalDate.of(2025, 10, 1),
