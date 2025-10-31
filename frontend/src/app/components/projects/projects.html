@@ -33,7 +33,11 @@
               </div>
             </div>
             <div class="project-actions">
-              <a *ngIf="project.githubUrl" [href]="project.githubUrl" target="_blank" class="github-btn">
+              <a *ngIf="project.liveUrl" [href]="project.liveUrl" target="_blank" rel="noopener" class="live-btn" style="margin-right:10px;">
+                <i class="fas fa-external-link-alt"></i>
+                Live Demo
+              </a>
+              <a *ngIf="project.githubUrl" [href]="project.githubUrl" target="_blank" rel="noopener" class="github-btn">
                 <i class="fab fa-github"></i>
                 View Code
               </a>
