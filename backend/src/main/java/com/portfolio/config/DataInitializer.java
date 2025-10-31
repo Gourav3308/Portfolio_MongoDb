@@ -121,9 +121,9 @@ public class DataInitializer implements CommandLineRunner {
                 "https://github.com/Gourav3308/SchoolWeb",
                 "https://schoolweb-1-homv.onrender.com",
                 null,
-                LocalDate.of(2025, 9, 1),
-                null,
-                true,
+                LocalDate.of(2025, 2, 1),
+                LocalDate.of(2025, 4, 1),
+                false,
                 Arrays.asList(
                     "Responsive Angular UI for school information",
                     "Secure Spring Boot API for notices, students, and fees",
@@ -168,7 +168,7 @@ public class DataInitializer implements CommandLineRunner {
                 null, // No live URL as requested
                 "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAwIiBoZWlnaHQ9IjQwMCIgdmlld0JveD0iMCAwIDUwMCA0MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI1MDAiIGhlaWdodD0iNDAwIiBmaWxsPSIjZTkxZTYzIi8+Cjx0ZXh0IHg9IjI1MCIgeT0iMjAwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMjgiIGZpbGw9IiNmZmZmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiPlBheW1lbnQgR2F0ZXdheTwvdGV4dD4KPC9zdmc+", // Payment Gateway project image
                 LocalDate.of(2025, 1, 1),
-                LocalDate.of(2025, 4, 1),
+                LocalDate.of(2025, 2, 1),
                 false,
                 Arrays.asList(
                     "Razorpay Payment Gateway Integration",
