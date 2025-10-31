@@ -1,7 +1,15 @@
 server:
   port: ${PORT:8080}
+  servlet:
+    session:
+      timeout: 30m
+  tomcat:
+    connection-timeout: 20000
+    keep-alive-timeout: 30000
 
 spring:
+  profiles:
+    active: prod
   data:
     mongodb:
       uri: ${SPRING_DATA_MONGODB_URI}
@@ -14,22 +22,29 @@ spring:
     enabled: true
   
   mail:
-    host: smtp.gmail.com
-    port: 587
-    username: ${MAIL_USERNAME}
-    password: ${MAIL_PASSWORD}
+    host: ${MAIL_HOST:smtp.gmail.com}
+    port: ${MAIL_PORT:587}
+    username: ${MAIL_USERNAME:gouravkrsah78@gmail.com}
+    password: ${MAIL_PASSWORD:byqmpgupkojqvzwv}
     properties:
       mail:
         smtp:
           auth: true
           starttls:
             enable: true
+            required: true
           ssl:
             trust: smtp.gmail.com
+          connectiontimeout: 30000
+          timeout: 30000
 
 app:
   contact:
-    email: ${CONTACT_EMAIL}
+    email: ${CONTACT_EMAIL:gouravkrsah78@gmail.com}
+  keep-alive:
+    enabled: true
+    interval: 240000  # 4 minutes
+    health-check-interval: 600000  # 10 minutes
 
 logging:
   level:
@@ -37,6 +52,7 @@ logging:
     org.springframework.data.mongodb: WARN
     org.springframework.mail: INFO
     org.springframework.security: WARN
+    org.springframework.scheduling: INFO
 
 management:
   endpoints:
@@ -46,3 +62,6 @@ management:
   endpoint:
     health:
       show-details: when-authorized
+  health:
+    defaults:
+      enabled: true

@@ -17,15 +17,18 @@ spring:
     host: smtp.gmail.com
     port: 587
     username: gouravkrsah78@gmail.com
-    password: byqm pgup kojq vzwv
+    password: byqmpgupkojqvzwv
     properties:
       mail:
         smtp:
           auth: true
           starttls:
             enable: true
+            required: true
           ssl:
             trust: smtp.gmail.com
+          connectiontimeout: 30000
+          timeout: 30000
 
 app:
   contact:

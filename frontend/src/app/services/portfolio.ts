@@ -15,7 +15,7 @@ import { Skill } from '../models/skill.model';
 export class PortfolioService {
   // Use environment-specific API URL
   private apiUrl = environment.apiUrl;
-  private maxRetries = 3;
+  private maxRetries = 2;
   private retryDelay = 2000; // 2 seconds
 
   constructor(private http: HttpClient) { }
@@ -54,7 +54,7 @@ export class PortfolioService {
   // Generic retry logic
   private retryRequest<T>(request: Observable<T>): Observable<T> {
     return request.pipe(
-      timeout(15000), // 15 second timeout
+      timeout(45000), // increase timeout to better handle cold starts in production
       retry({
         count: this.maxRetries,
         delay: (error, retryCount) => {
@@ -64,6 +64,11 @@ export class PortfolioService {
       }),
       catchError(this.handleError)
     );
+  }
+
+  // Lightweight health ping used to warm up backend on app start
+  pingHealth(): Observable<string> {
+    return this.http.get(`${this.apiUrl}/health`, { responseType: 'text' as const });
   }
 
   // Personal Info methods

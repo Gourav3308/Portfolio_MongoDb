@@ -15,6 +15,14 @@ import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.comp
 export class ProjectsComponent implements OnInit {
   projects: Project[] = [];
   loading = true;
+  private imageRetryState: Record<string, number> = {};
+  private imageCandidatesMap: Record<string, string[]> = {};
+  private customImageMap: Record<string, string> = {
+    'HealthBridge - Telehealth Platform': 'assets/images/healthbridge.jpg',
+    'SmartBank - Banking API System': 'assets/images/smartbank.jpg',
+    'Spring Boot Payment Gateway Integration': 'assets/images/springboot payemnt app.jpg',
+    'Schoolweb': 'assets/images/schoolweb.jpg'
+  };
 
   constructor(private portfolioService: PortfolioService) {}
 
@@ -33,5 +41,71 @@ export class ProjectsComponent implements OnInit {
         this.loading = false;
       }
     });
+  }
+
+  getProjectImage(project: Project): string {
+    const key = project.id || project.name;
+    // Direct mapping if provided
+    if (this.customImageMap[project.name]) {
+      return this.customImageMap[project.name];
+    }
+    if (project.imageUrl && project.imageUrl.trim().length > 0) {
+      return project.imageUrl;
+    }
+    if (!this.imageCandidatesMap[key]) {
+      this.imageCandidatesMap[key] = this.buildImageCandidates(project.name);
+      this.imageRetryState[key] = 0;
+    }
+    return this.imageCandidatesMap[key][0] || 'assets/images/project-placeholder.png';
+  }
+
+  handleImgError(event: Event, project: Project): void {
+    const target = event.target as HTMLImageElement;
+    const key = project.id || project.name;
+    if (!this.imageCandidatesMap[key]) {
+      this.imageCandidatesMap[key] = this.buildImageCandidates(project.name);
+    }
+    const attempt = (this.imageRetryState[key] ?? 0) + 1;
+    this.imageRetryState[key] = attempt;
+    const candidates = this.imageCandidatesMap[key];
+    if (attempt < candidates.length) {
+      target.src = candidates[attempt];
+    } else {
+      target.src = 'assets/images/project-placeholder.png';
+    }
+  }
+
+  private slugify(text: string): string {
+    return text
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)+/g, '');
+  }
+
+  private buildImageCandidates(name: string): string[] {
+    const baseDir = 'assets/images/';
+    const original = name.trim();
+    const lower = original.toLowerCase().replace(/\s+/g, ' ');
+    const hyphen = this.slugify(original);
+    const underscore = lower.replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '');
+    const compact = lower.replace(/[^a-z0-9]+/g, '');
+    const cleaned = original.replace(/[()\[\]{}'`"!@#$%^&*,.?<>:;|\\/+~=]+/g, '').replace(/\s+/g, ' ').trim();
+    const cleanedLower = cleaned.toLowerCase();
+    const exts = ['png', 'jpg', 'jpeg', 'webp', 'PNG', 'JPG', 'JPEG', 'WEBP'];
+
+    const unique = new Set<string>();
+    const push = (p: string) => { if (!unique.has(p)) unique.add(p); };
+
+    // Try plain names as provided
+    exts.forEach(ext => push(`${baseDir}${original}.${ext}`));
+    exts.forEach(ext => push(`${baseDir}${cleaned}.${ext}`));
+    exts.forEach(ext => push(`${baseDir}${lower}.${ext}`));
+    exts.forEach(ext => push(`${baseDir}${cleanedLower}.${ext}`));
+    // Try formatted variants
+    exts.forEach(ext => push(`${baseDir}${hyphen}.${ext}`));
+    exts.forEach(ext => push(`${baseDir}${underscore}.${ext}`));
+    exts.forEach(ext => push(`${baseDir}${compact}.${ext}`));
+
+    return Array.from(unique);
   }
 }
