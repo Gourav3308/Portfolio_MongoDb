@@ -17,6 +17,9 @@
     <div *ngIf="!loading && projects.length > 0" class="row">
       <div *ngFor="let project of projects" class="col-12 mb-4">
         <div class="project-card">
+          <div class="project-image">
+            <img [src]="getProjectImage(project)" (error)="handleImgError($event, project)" alt="{{ project.name }} image" loading="lazy" />
+          </div>
           <div class="card-header">
             <div class="project-info">
               <h3 class="project-title">{{ project.name }}</h3>

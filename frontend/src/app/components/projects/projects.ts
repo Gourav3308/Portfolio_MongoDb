@@ -121,6 +121,12 @@ export class ProjectsComponent implements OnInit {
     exts.forEach(ext => push(`${baseDir}${underscore}.${ext}`));
     exts.forEach(ext => push(`${baseDir}${compact}.${ext}`));
 
+    // Special-case fallback for SmartBank typo 'smaerbank.jpg'
+    if (lower.includes('smartbank')) {
+      push(`${baseDir}smaerbank.jpg`);
+      push(`${baseDir}smartbank.jpg`);
+    }
+
     return Array.from(unique);
   }
 }
