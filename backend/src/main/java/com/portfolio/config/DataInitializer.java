@@ -360,7 +360,7 @@ public class DataInitializer implements CommandLineRunner {
                 "2025",
                 null,
                 null,
-                "https://via.placeholder.com/800x600/e91e63/ffffff?text=Java+Full-Stack+Certificate",
+                "https://drive.google.com/file/d/1xb-y1wBtqkuH8CbFZLifWRQsHStO5pIc/view?usp=sharing",
                 "Comprehensive course covering Java fundamentals to advanced concepts, Spring Framework ecosystem (Spring Boot, Spring MVC, Spring Data JPA, Spring Security), frontend technologies (HTML5, CSS3, JavaScript ES6+), MySQL database management, and modern development practices including RESTful APIs and microservices architecture.",
                 "Active"
             ),
