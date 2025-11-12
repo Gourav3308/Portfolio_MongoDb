@@ -357,9 +357,9 @@ public class DataInitializer implements CommandLineRunner {
             createCertification(
                 "Java Full-Stack Development",
                 "Smart Programming",
-                "2025",
+                "01/2025",
                 null,
-                null,
+                "SP-JFS-2025",
                 "https://drive.google.com/file/d/1xb-y1wBtqkuH8CbFZLifWRQsHStO5pIc/view?usp=sharing",
                 "Comprehensive course covering Java fundamentals to advanced concepts, Spring Framework ecosystem (Spring Boot, Spring MVC, Spring Data JPA, Spring Security), frontend technologies (HTML5, CSS3, JavaScript ES6+), MySQL database management, and modern development practices including RESTful APIs and microservices architecture.",
                 "Active"
