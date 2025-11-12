@@ -1,5 +1,5 @@
 # Use Maven directly instead of wrapper
-FROM openjdk:17-jdk-slim
+FROM eclipse-temurin:17-jdk
 
 WORKDIR /app
 
